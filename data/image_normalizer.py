@@ -18,3 +18,5 @@ def normalize_image_file(fname):
 a = os.listdir('./image')
 for s in a:
         normalize_image_file(s[:-5])
+
+# See pca.py

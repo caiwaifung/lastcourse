@@ -30,3 +30,5 @@ build*/
 *.png
 *.bmp
 *.jpeg
+KMeans/*
+KMean*

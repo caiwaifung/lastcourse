@@ -2,8 +2,15 @@ import os
 import numpy as np
 import cv2
 
-a = os.listdir('./image-normalized')
+f = open('data5k.txt')
+a = f.readlines()#os.listdir('./image-normalized')
+f.close()
+f = open('query.txt')
+a = a + f.readlines()
+f.close()
+
 n = len(a)
+print n
 #n = 500
 m = 1024
 
@@ -11,7 +18,10 @@ data = np.zeros([n, m], dtype="float")
 
 i = 0
 for s in a:
-        p = cv2.imread('image-normalized/' + s, 0).reshape(m)
+        print(s)
+        ss = 'image-normalized/' + s[:-5] + 'png'
+        print(ss)
+        p = cv2.imread(ss, 0).reshape(m)
         data[i] = p
         i = i + 1
         if i == n:
