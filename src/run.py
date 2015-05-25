@@ -11,4 +11,5 @@ os.system('make DIM={}'.format(sys.argv[3]))
 
 d = '../data/feature-{}/{}.feature'.format(sys.argv[1], sys.argv[2])
 q = '../data/feature-{}/query.feature'.format(sys.argv[1])
-os.system("./a {} {} ../result/ans.txt".format(d, q))
+ret = os.system("./a {} {} ../result/ans.txt".format(d, q))
+sys.exit(ret)

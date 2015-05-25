@@ -74,10 +74,12 @@ int main(int argc, char *argv[]) {
     std::vector<Feature> data = FeatureList::load(f_data);
 
     printf("inserting data to tree..\n"); fflush(stdout);
+    /*
     RTree<void*, float, FEATURE_DIM> tree;
     for (auto &x: data) {
         tree.Insert(x.a, x.a, &x);
     }
+    */
 
     printf("answering queries..\n"); fflush(stdout);
     std::vector<Feature> queries = FeatureList::load(f_queries);
