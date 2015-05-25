@@ -27,4 +27,6 @@ build*/
 *.bak/
 *.pyc
 *.jpg
+*.png
+*.bmp
 *.jpeg
