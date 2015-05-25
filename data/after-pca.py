@@ -18,9 +18,7 @@ data = np.zeros([n, m], dtype="float")
 
 i = 0
 for s in a:
-        print(s)
         ss = 'image-normalized/' + s[:-5] + 'png'
-        print(ss)
         p = cv2.imread(ss, 0).reshape(m)
         data[i] = p
         i = i + 1
@@ -52,8 +50,6 @@ for i in [4, 8, 12, 16, 20, 24]:
                 f = open(s + '.txt', 'r')
                 g = open('feature-PCA' + str(i) + '/' + s + '.feature', 'w')
                 rr = f.readlines()
-                print i
-                print s
                 print len(rr)
                 
                 g.write(str(len(rr)) + ' ' + str(i) + '\n')
@@ -61,7 +57,7 @@ for i in [4, 8, 12, 16, 20, 24]:
                 if s == 'query':
                     j = 5000
                 for k in xrange(len(rr)):
-                    for ft in res[j]:
+                    for ft in res[j,:i]:
                         ff = np.sqrt(ft) if ft >= 0 else -np.sqrt(-ft)
                         g.write(str(ff) + ' ')
                     g.write('\n')
