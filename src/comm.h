@@ -7,6 +7,12 @@
 struct Feature {
     float a[FEATURE_DIM];
     int id;
+    double dis(const Feature &f) const {
+        double ans = 0;
+        for (int i = 0; i < FEATURE_DIM; ++i)
+            ans += double(a[i] - f.a[i]) * double(a[i] - f.a[i]);
+        return ans;
+    }
 };
 
 class FeatureList {

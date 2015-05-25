@@ -44,7 +44,7 @@ Result query(TreeType &tree, const Feature &feature) {
     memmove(rbound, feature.a, sizeof(rbound));
 
     found = 0;
-    float delta = 10.f; 
+    float delta = 0.0001f; 
     for (; ; delta *= 1.5f) {
         tree.Search(lbound, rbound, my_callback, nullptr);
         if (found > 0)
@@ -83,8 +83,22 @@ int main(int argc, char *argv[]) {
     std::vector<Feature> queries = FeatureList::load(f_queries);
     std::vector<Result> ans;
     for (auto &q: queries) {
+        int i = 0; double d = 1e50;
+        for (auto &x: data) {
+            double tmp = q.dis(x);
+            if (tmp < d) {
+                d = tmp;
+                i = x.id;
+            }
+        }
+        Result r;
+        r.delta = (float)d; r.found = 0;
+        r.id = i;
+        ans.push_back(r);
+        /*
         auto cur = query(tree, q);
         ans.push_back(cur);
+        */
     }
 
     printf("saving results..\n"); fflush(stdout);
