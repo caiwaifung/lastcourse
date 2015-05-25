@@ -38,14 +38,14 @@ eig = eig.transpose()
 print(eig.shape)
 print(eig)
 
-res = np.zeros([n, 24], dtype="float")
+res = np.zeros([n, 100], dtype="float")
 
 for i in xrange(n):
         vec = data[i] - mean;
-        for j in xrange(24):
+        for j in xrange(100):
                 res[i, j] = np.dot(eig[j + 1], vec)
 
-for i in [4, 8, 12, 16, 20, 24]:
+for i in [4, 8, 12, 16, 20, 24, 30]:
         for s in ['data1k', 'data2k', 'data3k', 'data4k', 'data5k', 'query']:
                 f = open(s + '.txt', 'r')
                 g = open('feature-PCA' + str(i) + '/' + s + '.feature', 'w')
@@ -59,7 +59,7 @@ for i in [4, 8, 12, 16, 20, 24]:
                 for k in xrange(len(rr)):
                     for ft in res[j,:i]:
                         ff = np.sqrt(ft) if ft >= 0 else -np.sqrt(-ft)
-                        g.write(str(ff) + ' ')
+                        g.write(str(ft) + ' ')
                     g.write('\n')
                     j = j + 1
 
