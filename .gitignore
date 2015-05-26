@@ -27,6 +27,8 @@ build*/
 *.bak/
 *.pyc
 *.jpg
+*.aux
+*.log
 data/image-normalized/*
 *.bmp
 *.jpeg
