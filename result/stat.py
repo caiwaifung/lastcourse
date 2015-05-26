@@ -44,7 +44,6 @@ for i in range(len(ans)):
         y = a[k].split('_')[0]
         if x == y:
             cnt2 += 1
-            break
 
 print 'result:'
 print '  #queries:', len(ans)
