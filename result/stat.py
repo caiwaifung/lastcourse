@@ -19,15 +19,19 @@ f.close()
 
 f = open('ans.txt', 'r')
 lines = f.readlines()
-ans = [x.split(' ')[1::2] for x in lines]
+stats = lines[::2]
+pairs = lines[1::2]
+ans = [x.strip().split(' ')[::2] for x in pairs]
 ans = [[int(i) for i in x] for x in ans]
-access_nums = [int(x.split(' ')[0]) for x in lines]
+access_nums = [int(x.strip().split(' ')[0]) for x in stats]
+split_nums = [int(x.strip().split(' ')[1]) for x in stats]
 f.close()
 assert(len(ans) == len(b))
 
 print 'tree:'
-print '  #queries:', len(access_nums)
-print '  #access:', sum(access_nums) / float(len(access_nums))
+print '  #queries:', len(stats)
+print '  #access :', sum(access_nums) / float(len(stats))
+print '  #split  :', sum(split_nums) / float(len(stats))
 
 cnt = 0
 cnt2 = 0

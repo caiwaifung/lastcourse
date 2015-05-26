@@ -1,7 +1,14 @@
 #ifndef RTREE_H
 #define RTREE_H
 
-int RTreeNodeAccessNum = 0;
+struct RTreeStat {
+    int access_num;
+    int split_num;
+    void clear() {
+        access_num = 0;
+        split_num = 0;
+    }
+} rtree_stat;
 
 // NOTE This file compiles under MSVC 6 SP5 and MSVC .Net 2003 it may not work on other compilers without modification.
 
@@ -1113,6 +1120,8 @@ void RTREE_QUAL::SplitNode(Node* a_node, Branch* a_branch, Node** a_newNode)
   ASSERT(a_node);
   ASSERT(a_branch);
 
+  ++rtree_stat.split_num;
+
   // Could just use local here, but member or external is faster since it is reused
   PartitionVars localVars;
   PartitionVars* parVars = &localVars;
@@ -1558,7 +1567,7 @@ bool RTREE_QUAL::Search(Node* a_node, Rect* a_rect, int& a_foundCount,
   ASSERT(a_node->m_level >= 0);
   ASSERT(a_rect);
 
-  ++RTreeNodeAccessNum; // FIXME: add by Qiwei Feng
+  ++rtree_stat.access_num; // FIXME: add by Qiwei Feng
 
   if(a_node->IsInternalNode()) // This is an internal node in the tree
   {

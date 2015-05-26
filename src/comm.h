@@ -6,6 +6,7 @@
 #include <cassert>
 
 typedef double Real;
+const int NUM_ANSWER = 8;
 
 struct Feature {
     Real a[FEATURE_DIM];
@@ -17,6 +18,12 @@ struct Feature {
         ans = sqrt(ans);
         return ans;
     }
+    bool operator <(const Feature &f) const {
+        double d = 0;
+        for (int i = 0; i < FEATURE_DIM; ++i)
+            d = d * 100 + (a[i] - f.a[i]);
+        return d < 0;
+    }
 };
 
 typedef std::pair<double, int> PairDI;
@@ -24,6 +31,7 @@ typedef std::pair<double, int> PairDI;
 struct Result {
     std::vector<PairDI> a;
     int access_num;
+    int split_num;
 };
 
 class IO {
@@ -53,9 +61,9 @@ public:
         if (f == nullptr)
             throw std::string("IO.save_result: cannot open file");
         for (auto &r: result) {
-            fprintf(f, "%d", r.access_num);
+            fprintf(f, "%d %d\n", r.access_num, r.split_num);
             for (auto &p: r.a)
-                fprintf(f, " %d %.6f", p.second, p.first);
+                fprintf(f, "%d %.6f ", p.second, p.first);
             fprintf(f, "\n");
         }
         fclose(f);
