@@ -27,7 +27,7 @@ build*/
 *.bak/
 *.pyc
 *.jpg
-*.png
+data/image-normalized/*
 *.bmp
 *.jpeg
 KMeans/*

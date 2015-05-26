@@ -1,4 +1,6 @@
 \documentclass{acm_proc_article-sp}
+\usepackage{tikz}
+\usetikzlibrary{plotmarks}
 \begin{document}
 \title{Algorithm and Data Structure Coursework: \\PCA Features for
 R-tree Based Similar Image Search}
@@ -177,8 +179,6 @@ Run \texttt{python src/run.py} to compile and run the program.
 \subsection{Node Access Numbers}
 Table \ref{table:accessnum} lists the node access number in different cases.
 \begin{table} \centering 
-    \caption{Node Access Numbers}
-    \label{table:accessnum}
 \begin{tabular}{|p{2.1cm}|c|c|c|c|c|}
     \hline
     Method and Feature Num & 1000 & 2000 & 3000 & 4000 & 5000 \\ \hline
@@ -197,17 +197,30 @@ Table \ref{table:accessnum} lists the node access number in different cases.
     KMeans 20 & 25.25 & 35.26 & 39.25 & 39.67 & 44.48 \\ \hline
     KMeans 24 & 20.68 & 27.81 & 30.20 & 33.46 & 34.79 \\ \hline
     Composite 25 & 80.01 & 136.8 & 202.4 & 254.9 & 305.4 \\ \hline
-\end{tabular} \end{table}
+\end{tabular}
+    \caption{Node Access Numbers}
+    \label{table:accessnum}
+\end{table}
 
-TODO: We can see that blablabla
+
+Figure \ref{fig:accessnum} shows the relationship between node access number
+    and feature number.
+\begin{figure} \centering
+    \includegraphics[width=0.4\textwidth]{data/accessnum.pdf}
+    \caption{Node Access Number}
+    \label{fig:accessnum}
+\end{figure}
+We can see that the number of access number increases while
+    the feature number is increased.
 
 \subsection{Performance}
 Table \ref{table:correctness} lists the correctness for different feature.
 There are 613 queries in total, and the database varies from 1000 images
     to 5000 images.
+The table shows that for each test case,
+    how many nearest neighbors are in the same catalogy as
+    the query image.
 \begin{table} \centering 
-    \caption{Correctness of Different Feature}
-    \label{table:correctness}
 \begin{tabular}{|p{2.1cm}|c|c|c|c|c|}
     \hline
     Method and Feature Num & 1000 & 2000 & 3000 & 4000 & 5000 \\ \hline
@@ -226,11 +239,32 @@ There are 613 queries in total, and the database varies from 1000 images
     KMeans 20 & 132 & 160 & 157 & 159 & 164 \\ \hline
     KMeans 24 & 121 & 161 & 153 & 167 & 178 \\ \hline
     Composite 25 & 201 & 219 & 230 & 235 & 240 \\ \hline
-\end{tabular} \end{table}
+\end{tabular} 
+\caption{Correctness of Different Feature}
+\label{table:correctness}
+\end{table}
+
+\subsection{The Results}
+Figure \ref{fig:result} shows some sample results from both
+    Color Moment HSV 9 features and
+    Composite 25 features.
+Here are three sample queries.
+The first, third, and fifth rows in the figure
+    is the results from Composite 25 features,
+    while the second, the forth, and the sixth
+    rows is from Color Moment HSV 9 features.
+In each row, the first picture is the query,
+    and the following are five best answers according to
+    their relevance to the query.
+A tick indicates that the answer to its left is correct,
+    i.e., in the same catalogy of the query.
+\begin{figure} \centering
+    \includegraphics[width=0.45\textwidth]{data/result.png}
+    \caption{Sample Nearest Neighbors}
+    \label{fig:result}
+\end{figure}
 
 \section{Conclusion}
-
-% end the environment with {table*}, NOTE not {table}!
 
 
 \bibliographystyle{abbrv}
