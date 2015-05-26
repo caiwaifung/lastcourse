@@ -11,5 +11,5 @@ for k in [25]:
 
 for x in a:
     print '{}:'.format(x[0])
-    os.system('python run.py a {} data5k {} | grep "#cor"'.format(x[0], x[1]))
+    os.system('python run.py a {} data5k {}"'.format(x[0], x[1]))
 

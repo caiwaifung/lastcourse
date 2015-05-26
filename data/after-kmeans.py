@@ -35,7 +35,7 @@ k20 = dlmread('kmeans20.txt',',')
 k24 = dlmread('kmeans24.txt',',')
 
 def dist(z):
-        return max(0, 1. / (0.2 + z) - 0.4)
+        return max(0, 2 - z)
 
 index = 0
 for s in a:
@@ -50,19 +50,19 @@ for s in a:
                         r4[index, j] += dist(np.dot(z, z))
                 for j in range(8):
                         z = g[i] - k8[j]
-                        r8[index, j] += dist(1+np.dot(z, z))
+                        r8[index, j] += dist(np.dot(z, z))
                 for j in range(12):
                         z = g[i] - k12[j]
-                        r12[index, j] += dist(1+np.dot(z, z))
+                        r12[index, j] += dist(np.dot(z, z))
                 for j in range(16):
                         z = g[i] - k16[j]
-                        r16[index, j] += dist(1+np.dot(z, z))
+                        r16[index, j] += dist(np.dot(z, z))
                 for j in range(20):
                         z = g[i] - k20[j]
-                        r20[index, j] += dist(1+np.dot(z, z))
+                        r20[index, j] += dist(np.dot(z, z))
                 for j in range(24):
                         z = g[i] - k24[j]
-                        r24[index, j] += dist(1+np.dot(z, z))
+                        r24[index, j] += dist(np.dot(z, z))
                         
         for j in range(4):
                 r4[index, j] /= h
