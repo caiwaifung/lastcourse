@@ -18,7 +18,8 @@ b = [x.strip() for x in f.readlines()]
 f.close()
 
 f = open('ans.txt', 'r')
-ans = [x.split(' ')[1::2] for x in f.readlines()]
+pairs = f.readlines()[1::2]
+ans = [x.strip().split(' ')[::2] for x in pairs]
 ans = [[int(i) for i in x] for x in ans]
 f.close()
 
