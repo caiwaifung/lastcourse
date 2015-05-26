@@ -21,38 +21,37 @@
 #include <string>
 #include <random>
 
-Result result;
-int found;
-int hit_id;
+Result cur_result;
+Feature cur_query;
 
 bool my_callback(void *obj, void *) {
-    hit_id = ((Feature *)obj)->id;
-    ++found;
+    Feature *fea = (Feature *)obj;
+    int id = fea->id;
+    double d = cur_query.dis(*fea);
+    cur_result.a.push_back(std::make_pair(d, id));
     return true;
 }
 
 template<class TreeType> 
-Result query(TreeType &tree, const Feature &feature) {
+void query(TreeType &tree, const Feature &feature) {
     static float lbound[FEATURE_DIM], rbound[FEATURE_DIM];
     memmove(lbound, feature.a, sizeof(lbound));
     memmove(rbound, feature.a, sizeof(rbound));
 
-    found = 0;
+    cur_result.a.clear();
     float delta = 0.0001f; 
     for (; ; delta *= 1.5f) {
         tree.Search(lbound, rbound, my_callback, nullptr);
-        if (found > 0)
+        if (cur_result.a.size() >= 5)
             break;
         for (int i = 0; i < FEATURE_DIM; ++i) {
             lbound[i] -= delta;
             rbound[i] += delta;
         }
     }
-    Result ret;
-    ret.id = hit_id;
-    ret.delta = delta;
-    ret.found = found;
-    return ret;
+    sort(cur_result.a.begin(), cur_result.a.end());
+    if (cur_result.a.size() > 5)
+        cur_result.a.resize(5);
 }
 
 int main(int argc, char *argv[]) {
@@ -77,9 +76,9 @@ int main(int argc, char *argv[]) {
     std::vector<Feature> queries = IO::load_data(f_queries);
     std::vector<Result> ans;
     for (auto &q: queries) {
-        result.a.clear();
+        cur_query = q;
         query(tree, q);
-        ans.push_back(result);
+        ans.push_back(cur_result);
     }
 
     printf("saving results..\n"); fflush(stdout);

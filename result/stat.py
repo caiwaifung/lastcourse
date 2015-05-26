@@ -45,5 +45,5 @@ for i in range(len(ans)):
 
 print 'result:'
 print '  #queries:', len(ans)
-print '  #correct first:', cnt
-print '  #correct total:', cnt2
+print '  #correct_first:', cnt, '  <- if found closest is correct'
+print '  #correct_total:', cnt2, '  <- if found top-K closest is correct'
