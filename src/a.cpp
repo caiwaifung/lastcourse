@@ -34,12 +34,12 @@ bool my_callback(void *obj, void *) {
 
 template<class TreeType> 
 void query(TreeType &tree, const Feature &feature) {
-    static float lbound[FEATURE_DIM], rbound[FEATURE_DIM];
+    static Real lbound[FEATURE_DIM], rbound[FEATURE_DIM];
     memmove(lbound, feature.a, sizeof(lbound));
     memmove(rbound, feature.a, sizeof(rbound));
 
     cur_result.a.clear();
-    float delta = 0.0001f; 
+    Real delta = 0.0001f; 
     for (; ; delta *= 1.5f) {
         RTreeNodeAccessNum = 0;
         tree.Search(lbound, rbound, my_callback, nullptr);
@@ -70,10 +70,10 @@ int main(int argc, char *argv[]) {
     std::vector<Feature> data = IO::load_data(f_data);
 
     printf("inserting data to tree..\n"); fflush(stdout);
-    RTree<void*, float, FEATURE_DIM> tree;
+    RTree<void*, Real, FEATURE_DIM> tree;
     for (auto &x: data) {
-        static int ind = 0;
-        printf("  -> inserting #%d..\n", ind); fflush(stdout);
+        //static int ind = 0;
+        //printf("  -> inserting #%d..\n", ++ind); fflush(stdout);
         tree.Insert(x.a, x.a, &x);
     }
 

@@ -46,8 +46,8 @@ int main(int argc, char *argv[]) {
             c.push_back(std::make_pair(tmp, x.id));
         }
         std::sort(c.begin(), c.end());
-        if (c.size() > 5)
-            c.resize(5);
+        if (c.size() > 10)
+            c.resize(10);
         Result r;
         r.a = c;
         r.access_num = 0;

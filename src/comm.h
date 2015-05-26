@@ -5,8 +5,10 @@
 #include <cstdio>
 #include <cassert>
 
+typedef double Real;
+
 struct Feature {
-    float a[FEATURE_DIM];
+    Real a[FEATURE_DIM];
     int id;
     double dis(const Feature &f) const {
         double ans = 0;
@@ -38,7 +40,9 @@ public:
             Feature cur;
             cur.id = i;
             for (int j = 0; j < m; ++j) {
-                fscanf(f, "%f", &cur.a[j]);
+                double tmp;
+                fscanf(f, "%lf", &tmp);
+                cur.a[j] = (Real)tmp;
             }
             a.push_back(cur);
         }
