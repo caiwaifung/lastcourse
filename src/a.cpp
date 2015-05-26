@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
         //memset(data[i].a, 0, sizeof(data[i].a));
         //data[i].a[0] = (Real)i;
     //}
-    //std::sort(data.begin(), data.end());
+    std::sort(data.begin(), data.end());
 
     printf("inserting data to tree..\n"); fflush(stdout);
     RTree<void*, Real, FEATURE_DIM> tree;

@@ -19,7 +19,7 @@ f.close()
 
 f = open('ans.txt', 'r')
 pairs = f.readlines()[1::2]
-ans = [x.strip().split(' ')[::2] for x in pairs]
+ans = [x.strip().split(' ')[:10:2] for x in pairs]
 ans = [[int(i) for i in x] for x in ans]
 f.close()
 
@@ -43,15 +43,15 @@ print >>f, '<table>'
 for i in range(min(100, len(ans))):
     std = b[i].split('_')[0]
     td = '<td align="center">'
-    template = 'alt="" style="height:50px;max-width:70px" align="center"'
+    template = 'alt="" style="height:50px;max-width:70px" align="right"'
     print >>f, '<tr>'
     print >>f, '{}<img src="../data/image/{}" {}></td>'.format(td, b[i], template)
     print >>f, '<td width="10"></td>'
     for k in ans[i]:
         ok_icon = '<img src="ok-icon.png" alt="" style="height:15px;width:15px">' 
         flag = ok_icon if a[k].split('_')[0] == std else ''
-        print >>f, '{}<img src="../data/image/{}" {}>'.format(td, a[k], template)
-        print >>f, '{}</td>'.format(flag)
+        print >>f, '{}<img src="../data/image/{}" {}></td>'.format(td, a[k], template)
+        print >>f, '<td>{}</td>'.format(flag)
     print >>f, '</tr>'
 print >>f, '</table>'
 print >>f, '</body> </html>'

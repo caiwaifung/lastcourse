@@ -11,17 +11,33 @@ const int NUM_ANSWER = 8;
 struct Feature {
     Real a[FEATURE_DIM];
     int id;
+    double abs() const {
+        double ans = 0;
+        for (int i = 0; i < FEATURE_DIM; ++i)
+            ans += a[i] * a[i];
+        ans = sqrt(ans);
+        return ans;
+    }
     double dis(const Feature &f) const {
+        /*
         double ans = 0;
         for (int i = 0; i < FEATURE_DIM; ++i)
             ans += double(a[i] - f.a[i]) * double(a[i] - f.a[i]);
         ans = sqrt(ans);
+        /*/
+        double ans = 0;
+        for (int i = 0; i < FEATURE_DIM; ++i)
+            ans += a[i] * f.a[i];
+        ans /= abs();
+        ans /= f.abs();
+        ans = -ans;
+        //*/
         return ans;
     }
     bool operator <(const Feature &f) const {
         double d = 0;
         for (int i = 0; i < FEATURE_DIM; ++i)
-            d = d * 100 + (a[i] - f.a[i]);
+            d = d * 1000 + (a[i] - f.a[i]);
         return d < 0;
     }
 };

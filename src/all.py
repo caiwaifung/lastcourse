@@ -11,5 +11,8 @@ for k in [25]:
 
 for x in a:
     print '{}:'.format(x[0])
-    os.system('python run.py a {} data5k {} | grep "#cor"'.format(x[0], x[1]))
+    cmd_r = 'python run.py a {} data5k {}'.format(x[0], x[1])
+    #cmd_g = 'grep "#cor\|#access\|#split"'
+    cmd_g = 'grep "#correct_first"'
+    os.system('{} | {}'.format(cmd_r, cmd_g))
 
