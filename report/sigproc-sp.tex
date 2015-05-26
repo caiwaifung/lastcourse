@@ -1,4 +1,6 @@
 \documentclass{acm_proc_article-sp}
+\usepackage{tikz}
+\usetikzlibrary{plotmarks}
 \begin{document}
 \title{Algorithm and Data Structure Coursework: \\PCA Features for
 R-tree Based Similar Image Search}
@@ -91,7 +93,13 @@ Table \ref{table:accessnum} lists the node access number in different cases.
     Composite 25 & 80.01 & 136.8 & 202.4 & 254.9 & 305.4 \\ \hline
 \end{tabular} \end{table}
 
-TODO: We can see that blablabla
+
+The following graph shows the relationship between node access number
+    and feature number.
+
+\begin{center}
+    \includegraphics[width=0.4\textwidth]{data/accessnum.pdf}
+\end{center}
 
 \subsection{Performance}
 Table \ref{table:correctness} lists the correctness for different feature.
@@ -120,31 +128,9 @@ There are 613 queries in total, and the database varies from 1000 images
     Composite 25 & 201 & 219 & 230 & 235 & 240 \\ \hline
 \end{tabular} \end{table}
 
+TODO: blahblah
+
 \section{Conclusion}
-
-\begin{table} 
-\centering
-\caption{Frequency of Special Characters}
-\begin{tabular}{|c|c|l|} \hline
-Non-English or Math&Frequency&Comments\\ \hline
-\O & 1 in 1,000& For Swedish names\\ \hline
-$\pi$ & 1 in 5& Common in math\\ \hline
-\$ & 4 in 5 & Used in business\\ \hline
-$\Psi^2_1$ & 1 in 40,000& Unexplained usage\\
-\hline\end{tabular}
-\end{table}
-
-\begin{table*}
-\centering
-\caption{Some Typical Commands}
-\begin{tabular}{|c|c|l|} \hline
-Command&A Number&Comments\\ \hline
-\texttt{{\char'134}alignauthor} & 100& Author alignment\\ \hline
-\texttt{{\char'134}numberofauthors}& 200& Author enumeration\\ \hline
-\texttt{{\char'134}table}& 300 & For tables\\ \hline
-\texttt{{\char'134}table*}& 400& For wider tables\\ \hline\end{tabular}
-\end{table*}
-% end the environment with {table*}, NOTE not {table}!
 
 
 \bibliographystyle{abbrv}
