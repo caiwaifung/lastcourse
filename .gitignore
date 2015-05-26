@@ -23,6 +23,7 @@ build*/
 *.exp
 *.gch
 *.bak
+*.zip
 *.sdf
 *.bak/
 *.pyc
