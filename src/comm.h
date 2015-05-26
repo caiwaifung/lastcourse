@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 #include <string>
 #include <vector>
 #include <cstdio>
@@ -11,24 +12,29 @@ struct Feature {
         double ans = 0;
         for (int i = 0; i < FEATURE_DIM; ++i)
             ans += double(a[i] - f.a[i]) * double(a[i] - f.a[i]);
+        ans = sqrt(ans);
         return ans;
     }
 };
 
-class FeatureList {
+typedef std::pair<double, int> PairDI;
+
+struct Result {
+    std::vector<PairDI> a;
+    int access_num;
+};
+
+class IO {
 public:
-    static std::vector<Feature> load(std::string filename) {
+    static std::vector<Feature> load_data(std::string filename) {
         FILE *f = fopen(filename.c_str(), "r");
         if (f == nullptr)
-            throw std::string("FeatureList.load: cannot open file");
-        //printf("successfully opened file.\n"); fflush(stdout);
+            throw std::string("IO.load_data: cannot open file");
         std::vector<Feature> a;
         int n, m; 
         fscanf(f, "%d%d", &n, &m);
-        //printf("n=%d m=%d\n", n, m); fflush(stdout);
         assert(m == FEATURE_DIM);
         for (int i = 0; i < n; ++i) {
-            //printf("reading line %d/%d\n", i+1, n); fflush(stdout);
             Feature cur;
             cur.id = i;
             for (int j = 0; j < m; ++j) {
@@ -37,6 +43,18 @@ public:
             a.push_back(cur);
         }
         return a;
+    }
+    static void save_result(std::string filename, const std::vector<Result> &result) {
+        FILE *f = fopen(filename.c_str(), "w");
+        if (f == nullptr)
+            throw std::string("IO.save_result: cannot open file");
+        for (auto &r: result) {
+            fprintf(f, "%d", r.access_num);
+            for (auto &p: r.a)
+                fprintf(f, " %d %.6f", p.second, p.first);
+            fprintf(f, "\n");
+        }
+        fclose(f);
     }
     /*
     static void save(const std::vector<Feature> &feature, std::string filename) {

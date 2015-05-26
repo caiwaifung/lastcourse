@@ -14,45 +14,13 @@
 #define FEATURE_DIM 10
 #endif
 
-#include "RTree.h"
 #include "comm.h"
+#include <algorithm>
 #include <cstdlib>
 #include <cstring>
 #include <string>
 #include <random>
-
-int found;
-int hit_id;
-
-bool my_callback(void *obj, void *) {
-    hit_id = ((Feature *)obj)->id;
-    ++found;
-    return true;
-}
-
-template<class TreeType> 
-Result query(TreeType &tree, const Feature &feature) {
-    static float lbound[FEATURE_DIM], rbound[FEATURE_DIM];
-    memmove(lbound, feature.a, sizeof(lbound));
-    memmove(rbound, feature.a, sizeof(rbound));
-
-    found = 0;
-    float delta = 0.0001f; 
-    for (; ; delta *= 1.5f) {
-        tree.Search(lbound, rbound, my_callback, nullptr);
-        if (found > 0)
-            break;
-        for (int i = 0; i < FEATURE_DIM; ++i) {
-            lbound[i] -= delta;
-            rbound[i] += delta;
-        }
-    }
-    Result ret;
-    ret.id = hit_id;
-    ret.delta = delta;
-    ret.found = found;
-    return ret;
-}
+#include <vector>
 
 int main(int argc, char *argv[]) {
     if (argc != 4) {
@@ -67,17 +35,23 @@ int main(int argc, char *argv[]) {
     std::vector<Feature> data = IO::load_data(f_data);
 
     printf("inserting data to tree..\n"); fflush(stdout);
-    RTree<void*, float, FEATURE_DIM> tree;
-    for (auto &x: data) {
-        tree.Insert(x.a, x.a, &x);
-    }
 
     printf("answering queries..\n"); fflush(stdout);
     std::vector<Feature> queries = IO::load_data(f_queries);
     std::vector<Result> ans;
     for (auto &q: queries) {
-        auto cur = query(tree, q);
-        ans.push_back(cur);
+        std::vector<PairDI> c;
+        for (auto &x: data) {
+            double tmp = q.dis(x);
+            c.push_back(std::make_pair(tmp, x.id));
+        }
+        std::sort(c.begin(), c.end());
+        if (c.size() > 5)
+            c.resize(5);
+        Result r;
+        r.a = c;
+        r.access_num = 0;
+        ans.push_back(r);
     }
 
     printf("saving results..\n"); fflush(stdout);

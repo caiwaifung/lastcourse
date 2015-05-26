@@ -19,45 +19,31 @@ b = [x.strip() for x in f.readlines()]
 f.close()
 
 f = open('ans.txt', 'r')
-ans = [int(x.split(' ')[0]) for x in f.readlines()]
+ans = [x.split(' ')[1::2] for x in f.readlines()]
+ans = [[int(i) for i in x] for x in ans]
 f.close()
 
-f = open('ans0.txt', 'r')
-ans0 = [int(x.split(' ')[0]) for x in f.readlines()]
-f.close()
+#f = open('ans0.txt', 'r')
+#ans0 = [int(x.split(' ')[0]) for x in f.readlines()]
+#f.close()
 
 f = open('a.html', 'w')
 print >>f, '<!DOCTYPE html>'
 print >>f, '<html> <body>'
 print >>f, '<table>'
 for i in range(min(100, len(ans))):
-    x = b[i].split('_')[0]
-    y = a[ans[i]].split('_')[0]
-    z = a[ans0[i]].split('_')[0]
-    l1 = 'Yes' if x == y else ''
-    l2 = 'Yes' if x == z else ''
+    std = b[i].split('_')[0]
 
-    template = 'alt="a0" style="height:100px;max-width:160px" align="center"'
+    td = '<td align="center">'
+    template = 'alt="a0" style="height:80px;max-width:110px" align="center"'
     print >>f, '<tr>'
-    print >>f, '<td><img src="../data/image/{}" {}></td>'.format(b[i], template)
-    print >>f, '<td><img src="../data/image/{}" {}></td>'.format(a[ans[i]], template)
-    print >>f, '<td>{}</td>'.format(l1)
-    print >>f, '<td><img src="../data/image/{}" {}></td>'.format(a[ans0[i]], template)
-    print >>f, '<td>{}</td>'.format(l2)
+    print >>f, '{}<img src="../data/image/{}" {}></td>'.format(td, b[i], template)
+    print >>f, '<td width="50"></td>'
+    for k in ans[i]:
+        flag = 'Yes' if a[k].split('_')[0] == std else ''
+        print >>f, '{}<img src="../data/image/{}" {}></td>'.format(td, a[k], template)
+        print >>f, '{}{}</td>'.format(td, flag)
     print >>f, '</tr>'
 print >>f, '</table>'
 print >>f, '</body> </html>'
 f.close()
-
-c1 = c2 = 0
-
-for i in range(min(900, len(ans))):
-    x = b[i].split('_')[0]
-    y = a[ans[i]].split('_')[0]
-    z = a[ans0[i]].split('_')[0]
-    if x == y:
-        c1 += 1
-    if x == z:
-        c2 += 1
-
-print len(ans), c1, c2
