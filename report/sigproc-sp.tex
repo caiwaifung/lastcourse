@@ -10,18 +10,7 @@ R-tree Based Similar Image Search}
 % of EIGHT authors. SIX appear on the 'first-page' (for formatting
 % reasons) and the remaining two appear in the \additionalauthors section.
 %
-\author{
-% You can go ahead and credit any number of authors here,
-% e.g. one 'row of three' or two rows (consisting of one row of three
-% and a second row of one, two or three).
-%
-% The command \alignauthor (no curly braces needed) should
-% precede each author name, affiliation/snail-mail address and
-% e-mail address. Additionally, tag each line of
-% affiliation/address with \affaddr, and tag the
-% e-mail address with \email.
-%
-\alignauthor
+\author{\alignauthor
 Qiwei Feng\\
        \affaddr{2011011250, IIIS-10}\\
        \affaddr{Tsinghua University}\\
@@ -38,7 +27,7 @@ Pufan He\\
 \begin{abstract}
 This project implements a similar image search engine based on R-Tree and
 several image features. We explores the performance of three major features,
-i.e. color moment (by color distribution), principal component analysis (PCA,
+i.e., color moment (by color distribution), principal component analysis (PCA,
 by image rough shape), and K-Means (by image details). We analyzes the
 correctness of different features, and the relation between features and R-Tree
 node accessing times. We try different insertion orders and similarity
@@ -140,9 +129,10 @@ the most variance of images in the data distribution.
 We list the average image and first few principle components found by PCA in
 our project:
 
-Mean: \includegraphics[width=20pt]{../data/PCA_visualize/eigvec0.png}
-
-Eigen Images: \includegraphics[width=20pt]{../data/PCA_visualize/eigvec1.png}
+\begin{tabular}{p{1.3cm}p{6cm}}
+    Mean: &\includegraphics[width=20pt]{../data/PCA_visualize/eigvec0.png} \\ 
+    Eigen Images: &
+        \includegraphics[width=20pt]{../data/PCA_visualize/eigvec1.png}
         \includegraphics[width=20pt]{../data/PCA_visualize/eigvec2.png}
         \includegraphics[width=20pt]{../data/PCA_visualize/eigvec3.png}
         \includegraphics[width=20pt]{../data/PCA_visualize/eigvec4.png}
@@ -158,6 +148,8 @@ Eigen Images: \includegraphics[width=20pt]{../data/PCA_visualize/eigvec1.png}
         \includegraphics[width=20pt]{../data/PCA_visualize/eigvec14.png}
         \includegraphics[width=20pt]{../data/PCA_visualize/eigvec15.png}
         \includegraphics[width=20pt]{../data/PCA_visualize/eigvec16.png}
+    \\
+\end{tabular}
 
 Note: Red means possitive, Cyan means negative. Dark means less absolute value.
 
@@ -177,7 +169,9 @@ Run \texttt{python src/run.py} to compile and run the program.
 \section{Experiments}
 
 \subsection{Node Access Numbers}
-Table \ref{table:accessnum} lists the node access number in different cases.
+\emph{Note: this is \textbf{problem 1}.}
+
+Table~\ref{table:accessnum} lists the node access number in different cases.
 \begin{table} \centering 
 \begin{tabular}{|p{2.1cm}|c|c|c|c|c|}
     \hline
@@ -201,8 +195,10 @@ Table \ref{table:accessnum} lists the node access number in different cases.
     \caption{Node Access Numbers}
     \label{table:accessnum}
 \end{table}
-Figure \ref{fig:accessnum} shows the relationship between node access number
-    and feature number.
+
+Figure~\ref{fig:accessnum} shows the relationship between node access number
+    and feature number
+    under database of 5000 features.
 \begin{figure} \centering
     \includegraphics[width=0.4\textwidth]{data/accessnum.pdf}
     \caption{Node Access Number}
@@ -212,7 +208,9 @@ We can see that the number of access number increases while
     the feature number is increased.
 
 \subsection{Performance}
-Table \ref{table:correctness} lists the correctness for different feature.
+\emph{Note: this is \textbf{problem 2}.}
+
+Table~\ref{table:correctness} lists the correctness for different feature.
 There are 613 queries in total, and the database varies from 1000 images
     to 5000 images.
 The table shows that for each test case,
@@ -243,7 +241,9 @@ The table shows that for each test case,
 \end{table}
 
 \subsection{The Results}
-Figure \ref{fig:result} shows some sample results from both
+\emph{Note: this is \textbf{problem 3}. }
+
+Figure~\ref{fig:result} shows some sample results from both
     Color Moment HSV 9 features and
     Composite 25 features.
 Here are three sample queries.
@@ -261,6 +261,20 @@ A tick indicates that the answer to its left is correct,
     \caption{Sample Nearest Neighbors}
     \label{fig:result}
 \end{figure}
+
+In the first example, the query is a big house.
+The Composite method finds 4 buildings in the top-5 nearest neighbor searching.
+The Color Moment HSV method, however, finds many
+    irrelevant pictures.
+In the second example, the Composite method
+    also finds 4 piano which is the correct.
+The HSV method fails to find any piano in its
+    5 nearest neighbor searching process.
+The thrid example is a waterweel.
+Both the Composite method and the HSV methods make mistakes
+    in this example,
+    but the Composite method still does better
+    by making three ticks in five answers.
 
 \section{Conclusion}
 
