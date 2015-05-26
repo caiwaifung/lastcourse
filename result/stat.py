@@ -19,10 +19,16 @@ b = [x.strip() for x in f.readlines()]
 f.close()
 
 f = open('ans.txt', 'r')
-ans = [x.split(' ')[1::2] for x in f.readlines()]
+lines = f.readlines()
+ans = [x.split(' ')[1::2] for x in lines]
 ans = [[int(i) for i in x] for x in ans]
+access_nums = [int(x.split(' ')[0]) for x in lines]
 f.close()
 assert(len(ans) == len(b))
+
+print 'tree:'
+print '  #queries:', len(access_nums)
+print '  #access:', sum(access_nums) / float(len(access_nums))
 
 cnt = 0
 cnt2 = 0
@@ -37,6 +43,7 @@ for i in range(len(ans)):
             cnt2 += 1
             break
 
-print '#queries:', len(ans)
-print '#correct first:', cnt
-print '#correct total:', cnt2
+print 'result:'
+print '  #queries:', len(ans)
+print '  #correct first:', cnt
+print '  #correct total:', cnt2

@@ -21,6 +21,7 @@
 #include <string>
 #include <random>
 
+Result result;
 int found;
 int hit_id;
 
@@ -76,8 +77,9 @@ int main(int argc, char *argv[]) {
     std::vector<Feature> queries = IO::load_data(f_queries);
     std::vector<Result> ans;
     for (auto &q: queries) {
-        auto cur = query(tree, q);
-        ans.push_back(cur);
+        result.a.clear();
+        query(tree, q);
+        ans.push_back(result);
     }
 
     printf("saving results..\n"); fflush(stdout);
