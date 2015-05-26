@@ -1,6 +1,8 @@
 #ifndef RTREE_H
 #define RTREE_H
 
+int RTreeNodeAccessNum = 0;
+
 // NOTE This file compiles under MSVC 6 SP5 and MSVC .Net 2003 it may not work on other compilers without modification.
 
 // NOTE These next few lines may be win32 specific, you may need to modify them to compile on other platform
@@ -1555,6 +1557,8 @@ bool RTREE_QUAL::Search(Node* a_node, Rect* a_rect, int& a_foundCount,
   ASSERT(a_node);
   ASSERT(a_node->m_level >= 0);
   ASSERT(a_rect);
+
+  ++RTreeNodeAccessNum; // FIXME: add by Qiwei Feng
 
   if(a_node->IsInternalNode()) // This is an internal node in the tree
   {

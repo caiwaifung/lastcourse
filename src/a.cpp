@@ -41,6 +41,7 @@ void query(TreeType &tree, const Feature &feature) {
     cur_result.a.clear();
     float delta = 0.0001f; 
     for (; ; delta *= 1.5f) {
+        RTreeNodeAccessNum = 0;
         tree.Search(lbound, rbound, my_callback, nullptr);
         if (cur_result.a.size() >= 5)
             break;
@@ -53,6 +54,7 @@ void query(TreeType &tree, const Feature &feature) {
     sort(cur_result.a.begin(), cur_result.a.end());
     if (cur_result.a.size() > 5)
         cur_result.a.resize(5);
+    cur_result.access_num = RTreeNodeAccessNum;
 }
 
 int main(int argc, char *argv[]) {
@@ -70,6 +72,8 @@ int main(int argc, char *argv[]) {
     printf("inserting data to tree..\n"); fflush(stdout);
     RTree<void*, float, FEATURE_DIM> tree;
     for (auto &x: data) {
+        static int ind = 0;
+        printf("  -> inserting #%d..\n", ind); fflush(stdout);
         tree.Insert(x.a, x.a, &x);
     }
 

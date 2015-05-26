@@ -24,7 +24,10 @@ print
 print '|run.py| Running...'
 d = '../data/feature-{}/{}.feature'.format(feature, data)
 q = '../data/feature-{}/query.feature'.format(feature)
-ret = os.system("{} {} {} ../result/ans.txt".format(target, d, q))
+cmd = "{} {} {} ../result/ans.txt".format(target, d, q)
+if os.name == 'posix':
+    cmd = './' + cmd
+ret = os.system(cmd)
 if ret != 0:
     print 'failed to run. EXITCODE={}'.format(ret)
     sys.exit(ret)
