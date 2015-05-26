@@ -40,6 +40,7 @@ void query(TreeType &tree, const Feature &feature) {
     Real le = 0., ri = 10000; 
     for (int tmp = 0; tmp < 20; ++tmp) {
         Real radius = (le + ri) / 2.;
+        if (tmp == 19) radius = ri;
         static Real lbound[FEATURE_DIM], rbound[FEATURE_DIM];
         for (int i = 0; i < FEATURE_DIM; ++i) {
             lbound[i] = feature.a[i] - radius;
@@ -53,7 +54,6 @@ void query(TreeType &tree, const Feature &feature) {
         else
             le = radius;
     }
-    //printf("le=%.3lf rn=%d\n", le, (int)cur_result.a.size());
     sort(cur_result.a.begin(), cur_result.a.end());
     if (cur_result.a.size() > NUM_ANSWER)
         cur_result.a.resize(NUM_ANSWER);

@@ -68,9 +68,4 @@ public:
         }
         fclose(f);
     }
-    /*
-    static void save(const std::vector<Feature> &feature, std::string filename) {
-        assert(false);
-    }
-    */
 };
