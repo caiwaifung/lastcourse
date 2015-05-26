@@ -34,22 +34,130 @@ Pufan He\\
 
 \maketitle
 \begin{abstract}
-This paper provides a sample of a \LaTeX\ document.
+This project implements a similar image search engine based on R-Tree and
+several image features. We explores the performance of three major features,
+i.e. color moment (by color distribution), principal component analysis (PCA,
+by image rough shape), and K-Means (by image details). We analyzes the
+correctness of different features, and the relation between features and R-Tree
+node accessing times. We try different insertion orders and similarity
+functions for R-Tree, and summarize their effect with different features.
+
+We made our work open, and the full project codes can be found at \texttt{https://github.com/caiwaifung/lastcourse}.
 \end{abstract}
 
 \keywords{R-Tree, Similar Image, PCA, K-Means}
 
 \section{Introduction}
+Similar image searching is a popular problem in computer vision and data
+science. Many nice approaches have been serving the public online, like Google,
+Baidu, etc. The idea of fast and nice similar image searching usually splits
+into two parts: feature extraction and close points finding.
 
-Github address: \texttt{https://github.com/caiwaifung/lastcourse}.
+\textbf{Feature extraction}: When calculating the similarity between two
+images, we must find their simplified representation before we could compare,
+because image dataset is too large. Usually the representation is an array of
+integer or real numbers (feature vector). By representation, the similarity can
+be simplified by some simple math operations between the representation
+instead. The way to represent an image is called feature extraction. A well
+designed feature should have two properties.
+\begin{itemize}
+\item Small. Smaller feature size means less stress on computation and storage.
+\item Accurate. Similar images will have similar features, while irrelated
+        images have discriminable features.
+\end{itemize}
 
-\subsection{Image Search}
-
-\subsection{Data Structures}
+\textbf{Close points finding}: After all images have been turned into feature
+vectors, the problem now is to maintain a set of vectors (image pool), and when
+take a query vector (query image), find the top several closest vectors in the
+set for the query one. This problem usually occurs in two scenario:
+\begin{itemize}
+        \item Sparse. E.g., many elements in a feature is zero, only some
+                appears non-zero. Like the word count for a article. Usually an
+                article will not cover all vocabularies we cares. We usually
+                use inverse lookup based data structures to solve sparse
+                feature similarity searching problem.
+        \item Dense. The dimension of features are usually small, and most
+                elements do not have default values that appears in a
+                considerable probability. The features studied in this project
+                are all dense features. We usually use K-D Tree based data
+                structure to solve dense feature similarity searching problem.
+                R-Tree is a variation of K-D Tree that is designed for disk
+                structure.
+\end{itemize}
 
 \subsection{Low Level Features}
 
-\subsection{PCA}
+We can design features for general images, with no training phase. Such
+features are called low level features. However not to misunderstand, low level
+features can be very strong.
+
+\textbf{Color moment} is a low level feature: it considers each pixels color
+space, RGB or HSV, and calculates the mean, variance, and skewness for each parts.
+We included the given color moment feature in our project.
+\begin{align}
+        M^H_1&=\frac{1}{w\times h}\sum_{x,y}H[x,y]\\
+        M^H_2&=\sqrt{\frac{1}{w\times h}\sum_{x,y}(H[x,y]-M_1)^2}\\
+        M^H_3&=\sqrt[3]{\frac{1}{w\times h}\sum_{x,y}(H[x,y]-M_1)^3}
+\end{align}
+And similarly for $M^S_{1\dots 3}$ and $M^V_{1\dots 3}$. The final
+representation is $\mathbb{R}^9$:\[\left\{M^H_{1\dots 3}, M^S_{1\dots 3},
+M^V_{1\dots 3}\right\}\]
+This feature describes the color distribution of image, without regard to the
+pixel permutation.
+
+There are many other way to design low level features like color space histogram,
+gradient distribution or histogram, or we can divide the image into determined
+districts, e.g. 3x3, and extract feature for each region, finally merge into a
+single long feature.
+
+However, low level features usually takes fixed size (dimension) and not
+suitable for our study of R-Tree with different feature dimensions. So we tried
+to extract deeper features that is learned from the dataset unsupervisedly (The
+project guide forbids training feature with ground truth label).
+
+\subsection{Principle Component Analysis}
+A straight forward idea of comparing two image, is to resize them into an
+identical size $w\times h$, and compare the images pixel by pixel. We set
+$w=h=32$ which we think manually examining images is still feasible. All images
+are resized to 32x32 in advance, with linear stretch if the ratio is not 1:1.
+
+Because we already have color based feature, we leave out the color, and only use 32x32 $0~255$
+grayscale images in this feature design.
+
+Then, we can use a small set of 32x32 eigen images, as the principle
+component learned from the dataset, to describe any potential image as close as
+possible.
+
+Every image can be written by a linear combination of several eigen images.
+Eigen images are orthogonal with each other, so by dot production, we can
+easily find the eigen base representation of a image.
+
+PCA is to find eigen images in a way that first few eigen images will covers
+the most variance of images in the data distribution.
+
+We list the average image and first few principle components found by PCA in
+our project:
+
+Mean: \includegraphics[width=20pt]{../data/PCA_visualize/eigvec0.png}
+
+Eigen Images: \includegraphics[width=20pt]{../data/PCA_visualize/eigvec1.png}
+        \includegraphics[width=20pt]{../data/PCA_visualize/eigvec2.png}
+        \includegraphics[width=20pt]{../data/PCA_visualize/eigvec3.png}
+        \includegraphics[width=20pt]{../data/PCA_visualize/eigvec4.png}
+        \includegraphics[width=20pt]{../data/PCA_visualize/eigvec5.png}
+        \includegraphics[width=20pt]{../data/PCA_visualize/eigvec6.png}
+        \includegraphics[width=20pt]{../data/PCA_visualize/eigvec7.png}
+        \includegraphics[width=20pt]{../data/PCA_visualize/eigvec8.png}
+        \includegraphics[width=20pt]{../data/PCA_visualize/eigvec9.png}
+        \includegraphics[width=20pt]{../data/PCA_visualize/eigvec10.png}
+        \includegraphics[width=20pt]{../data/PCA_visualize/eigvec11.png}
+        \includegraphics[width=20pt]{../data/PCA_visualize/eigvec12.png}
+        \includegraphics[width=20pt]{../data/PCA_visualize/eigvec13.png}
+        \includegraphics[width=20pt]{../data/PCA_visualize/eigvec14.png}
+        \includegraphics[width=20pt]{../data/PCA_visualize/eigvec15.png}
+        \includegraphics[width=20pt]{../data/PCA_visualize/eigvec16.png}
+
+Note: Red means possitive, Cyan means negative. Dark means less absolute value.
 
 \subsection{K-Means}
 
@@ -122,28 +230,6 @@ There are 613 queries in total, and the database varies from 1000 images
 
 \section{Conclusion}
 
-\begin{table} 
-\centering
-\caption{Frequency of Special Characters}
-\begin{tabular}{|c|c|l|} \hline
-Non-English or Math&Frequency&Comments\\ \hline
-\O & 1 in 1,000& For Swedish names\\ \hline
-$\pi$ & 1 in 5& Common in math\\ \hline
-\$ & 4 in 5 & Used in business\\ \hline
-$\Psi^2_1$ & 1 in 40,000& Unexplained usage\\
-\hline\end{tabular}
-\end{table}
-
-\begin{table*}
-\centering
-\caption{Some Typical Commands}
-\begin{tabular}{|c|c|l|} \hline
-Command&A Number&Comments\\ \hline
-\texttt{{\char'134}alignauthor} & 100& Author alignment\\ \hline
-\texttt{{\char'134}numberofauthors}& 200& Author enumeration\\ \hline
-\texttt{{\char'134}table}& 300 & For tables\\ \hline
-\texttt{{\char'134}table*}& 400& For wider tables\\ \hline\end{tabular}
-\end{table*}
 % end the environment with {table*}, NOTE not {table}!
 
 
