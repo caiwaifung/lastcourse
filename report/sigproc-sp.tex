@@ -2,7 +2,7 @@
 \usepackage{tikz}
 \usetikzlibrary{plotmarks}
 \begin{document}
-\title{Algorithm and Data Structure Coursework: \\PCA Features for
+\title{Algorithm and Data Structure Coursework: \\PCA And K-Means for
 R-tree Based Similar Image Search}
 \subtitle{}
 %
@@ -201,8 +201,7 @@ Run \texttt{python src/run.py} to compile and run the program.
 
 \section{Experiments}
 
-\subsection{Node Access Numbers}
-\emph{Note: this is \textbf{problem 1}.}
+\subsection{Node Access Numbers (Problem 1)}
 
 Table~\ref{table:accessnum} lists the node access number in different cases.
 \begin{table} \centering 
@@ -241,8 +240,7 @@ Figure~\ref{fig:accessnum} shows the relationship between node access number
 We can see that the number of access number increases while
     the feature number is increased.
 
-\subsection{Performance}
-\emph{Note: this is \textbf{problem 2}.}
+\subsection{Performance (Problem 2)}
 
 Table~\ref{table:correctness} lists the correctness for different feature.
 There are 613 queries in total, and the database varies from 1000 images
@@ -275,9 +273,7 @@ The table shows that for each test case,
 \label{table:correctness}
 \end{table}
 
-\subsection{The Results}
-\emph{Note: this is \textbf{problem 3}. }
-
+\subsection{The Results (Problem 3)}
 Figure~\ref{fig:result} shows some sample results from both
     Color Moment HSV 9 features and
     Composite 25 features.
@@ -313,7 +309,8 @@ Both the Composite method and the HSV methods make mistakes
 
 Please see \texttt{demo.html} under \texttt{result.zip} for a more detailed demo.
 
-\subsection{Other Similarity Functions}
+\subsection{Other Similarity Functions (Problem 4c)}
+
 We tried two other similarity functions and their comparison
     with standard Euclidean distance similarity function is shown
     in table~\ref{table:simfunc}.
@@ -327,7 +324,7 @@ We tried two other similarity functions and their comparison
     & 167 & 160 & 197 & 232 \\ \hline
 \end{tabular} 
 \caption{Difference Similarity Functions}
-\label{table:correctness}
+\label{table:simfunc}
 \end{table}
 We can see that under certain feature methods,
     the absolute difference similarity function (second one) performs better
