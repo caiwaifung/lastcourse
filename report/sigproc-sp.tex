@@ -311,6 +311,28 @@ Both the Composite method and the HSV methods make mistakes
     but the Composite method still does better
     by making three ticks in five answers.
 
+\subsection{Other Similarity Functions}
+We tried two other similarity functions and their comparison
+    with standard Euclidean distance similarity function is shown
+    in table~\ref{table:simfunc}.
+\begin{table} \centering 
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Function & HSV9 & PCA8 & PCA16 & Composite \\ \hline
+    $\sqrt{\sum_i (a_i - b_i)^2}$ & 171 & 177 & 205 & 229 \\ \hline
+    $\sum_i |a_i - b_i|$ & 179 & 176 & 201 & 237 \\ \hline
+    $\frac{\sum_i a_i b_i}{||a|| ||b||}$
+    & 167 & 160 & 197 & 232 \\ \hline
+\end{tabular} 
+\caption{Difference Similarity Functions}
+\label{table:correctness}
+\end{table}
+We can see that under certain feature methods,
+    the absolute difference similarity function (second one) performs better
+    than the Euclidean distance similarity (first one) function.
+Meanwhile, the cosine similarity (third one) function
+    is worse than two other functions.
+
 \bibliographystyle{abbrv}
 \bibliography{sigproc} 
 
