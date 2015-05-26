@@ -44,6 +44,7 @@ void query(TreeType &tree, const Feature &feature) {
         tree.Search(lbound, rbound, my_callback, nullptr);
         if (cur_result.a.size() >= 5)
             break;
+        cur_result.a.clear();
         for (int i = 0; i < FEATURE_DIM; ++i) {
             lbound[i] -= delta;
             rbound[i] += delta;

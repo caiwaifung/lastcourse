@@ -29,7 +29,7 @@ f.close()
 f = open('a.html', 'w')
 print >>f, '<!DOCTYPE html>'
 print >>f, '<html> <body>'
-print >>f, '<table>'
+print >>f, '<table border="1">'
 for i in range(min(100, len(ans))):
     std = b[i].split('_')[0]
 

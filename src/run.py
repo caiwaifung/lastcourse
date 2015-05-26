@@ -14,11 +14,14 @@ source = '{}.cpp'.format(prog)
 target = prog
 flags = '-DFEATURE_DIM={} -Wall -Wconversion -Wextra --std=c++11'.format(dim)
 
+print '|run.py| Compiling...'
 ret = os.system('g++ {} -o {} {}'.format(source, target, flags))
 if ret != 0:
     print 'failed to compile. EXITCODE={}'.format(ret)
     sys.exit(ret)
 
+print
+print '|run.py| Running...'
 d = '../data/feature-{}/{}.feature'.format(feature, data)
 q = '../data/feature-{}/query.feature'.format(feature)
 ret = os.system("./{} {} {} ../result/ans.txt".format(target, d, q))
@@ -26,5 +29,8 @@ if ret != 0:
     print 'failed to run. EXITCODE={}'.format(ret)
     sys.exit(ret)
 
+print
+print '|run.py| Printing Stat...'
 os.chdir('../result')
+os.system('python show.py {}'.format(data))
 os.system('python stat.py {}'.format(data))
