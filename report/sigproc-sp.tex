@@ -161,9 +161,46 @@ Eigen Images: \includegraphics[width=20pt]{../data/PCA_visualize/eigvec1.png}
 
 Note: Red means possitive, Cyan means negative. Dark means less absolute value.
 
+The advantage of PCA is we can select to use any number of eigen images, i.e.,
+only use the first few most significant components to represent the whole image
+constitution. We used Numpy and Matlab in the training phase of PCA, which
+takes just few minutes on a personal computer.
+
 \subsection{K-Means}
+Many research in computer vision finds that the appearance of same patterns
+by convolution in image will help learning deep representation. K-Means is the
+basic way to find such patterns.
+
+First resize the images reserving the ratio to have the largest side length
+$\leq 32$. Then we extract all 4x4 patches with RGB color space. So a patch
+contains $48$ numbers, and for a resized image, there are at most
+$(32-4+1)^2=841$ patches. We normalize each patch vector by
+\begin{itemize}
+\item Subtract the average among all 48 channels.
+\item Normalize to a unit vector.
+\end{itemize}
+Then, we try to cluster all patches in the dataset (approximately $5613\times
+841$) using $K$ centroids, for $K=4,8,12,16,20,24$.
+
+Then we represent an image by $K$ average distances between every centroid and
+all normalized patches that image has.
+
+The training phase takes several hours, and that's why we only use $32$ image
+side and $4\times 4$ kernel.
+
+\subsection{Composite Feature}
+We also designed a composite feature: the concatenation of PCA16 and
+Color Moment. We adjust the scale of Color Moment by $0.1$ to balance the
+feature variance.
 
 \section{Data}
+
+There are 5613 images given. We first random shuffle the dataset to $r_{0\dots
+5612}$, and split
+into two parts: pool set with 5000 size, query set with 613 size.
+\begin{verbatim}data1k: 0~999; data2k: 0~1999; data3k: 0~2999;
+data4k: 0~3999; data5k: 0~4999; query: 5000~5612\end{verbatim}
+
 
 \section{Feature Finding}
 
