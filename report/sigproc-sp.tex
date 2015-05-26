@@ -57,6 +57,8 @@ Github address: \texttt{https://github.com/caiwaifung/lastcourse}.
 
 \section{Feature Finding}
 
+TODO: list feature here (PCA, KMeans, Composite).
+
 \section{R-Tree}
 We use the ``rtree alternative package'' implementation of R-tree.
 The wrapper \texttt{src/a.cpp} calls methods of provided R-tree class.
@@ -64,9 +66,63 @@ Run \texttt{python src/run.py} to compile and run the program.
 
 \section{Experiments}
 
+\subsection{Node Access Numbers}
+Table \ref{table:accessnum} lists the node access number in different cases.
+\begin{table} \centering 
+    \caption{Node Access Numbers}
+    \label{table:accessnum}
+\begin{tabular}{|p{2.1cm}|c|c|c|c|c|}
+    \hline
+    Method and Feature Num & 1000 & 2000 & 3000 & 4000 & 5000 \\ \hline
+    Color Moment HSV 9 & 46.11 & 67.69 & 88.69 & 98.24 & 117.0 \\ \hline
+    PCA 4 & 37.18 & 53.31 & 71.37 & 76.72 & 81.83 \\ \hline
+    PCA 8 & 68.42 & 107.7 & 145.8 & 176.1 & 208.4 \\ \hline
+    PCA 12 & 77.95 & 129.9 & 174.5 & 217.8 & 252.6 \\ \hline
+    PCA 16 & 82.46 & 135.4 & 190.2 & 236.2 & 280.0 \\ \hline
+    PCA 20 & 81.55 & 137.8 & 196.4 & 253.7 & 302.8 \\ \hline
+    PCA 24 & 83.11 & 135.7 & 192.8 & 248.0 & 297.4 \\ \hline
+    PCA 30 & 123.8 & 207.4 & 281.4 & 351.7 & 416.4 \\ \hline
+    KMeans 4 & 16.01 & 19.76 & 22.24 & 23.53 & 24.71 \\ \hline
+    KMeans 8 & 17.49 & 21.83 & 24.44 & 25.88 & 26.66 \\ \hline
+    KMeans 12 & 20.90 & 25.76 & 30.96 & 34.85 & 37.43 \\ \hline
+    KMeans 16 & 22.22 & 28.40 & 33.89 & 37.25 & 38.14 \\ \hline
+    KMeans 20 & 25.25 & 35.26 & 39.25 & 39.67 & 44.48 \\ \hline
+    KMeans 24 & 20.68 & 27.81 & 30.20 & 33.46 & 34.79 \\ \hline
+    Composite 25 & 80.01 & 136.8 & 202.4 & 254.9 & 305.4 \\ \hline
+\end{tabular} \end{table}
+
+TODO: We can see that blablabla
+
+\subsection{Performance}
+Table \ref{table:correctness} lists the correctness for different feature.
+There are 613 queries in total, and the database varies from 1000 images
+    to 5000 images.
+\begin{table} \centering 
+    \caption{Correctness of Different Feature}
+    \label{table:correctness}
+\begin{tabular}{|p{2.1cm}|c|c|c|c|c|}
+    \hline
+    Method and Feature Num & 1000 & 2000 & 3000 & 4000 & 5000 \\ \hline
+    Color Moment HSV 9 & 153 & 174 & 178 & 190 & 195 \\ \hline
+    PCA 4 & 116 & 130 & 133 & 141 & 151 \\ \hline
+    PCA 8 & 158 & 170 & 172 & 176 & 183 \\ \hline
+    PCA 12 & 181 & 190 & 199 & 205 & 208 \\ \hline
+    PCA 16 & 181 & 198 & 205 & 206 & 217 \\ \hline
+    PCA 20 & 185 & 200 & 207 & 213 & 225 \\ \hline
+    PCA 24 & 180 & 194 & 201 & 212 & 221 \\ \hline
+    PCA 30 & 177 & 198 & 205 & 203 & 217 \\ \hline
+    KMeans 4 & 126 & 132 & 147 & 148 & 147 \\ \hline
+    KMeans 8 & 124 & 155 & 154 & 155 & 161 \\ \hline
+    KMeans 12 & 132 & 154 & 158 & 154 & 158 \\ \hline
+    KMeans 16 & 133 & 154 & 165 & 167 & 173 \\ \hline
+    KMeans 20 & 132 & 160 & 157 & 159 & 164 \\ \hline
+    KMeans 24 & 121 & 161 & 153 & 167 & 178 \\ \hline
+    Composite 25 & 201 & 219 & 230 & 235 & 240 \\ \hline
+\end{tabular} \end{table}
+
 \section{Conclusion}
 
-\begin{table}
+\begin{table} 
 \centering
 \caption{Frequency of Special Characters}
 \begin{tabular}{|c|c|l|} \hline
