@@ -4,9 +4,11 @@ Experiment Project: Indexing Images for Content Based Retrieval
 FORMATS:
 
 - feature file
+
     N, M, following by N lines of M-dim features (floats)
 
 - ans files
+
     number of queries blocks; each block 2 lines.
     first line: A, S
         A (int): number of node access
