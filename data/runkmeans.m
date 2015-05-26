@@ -23,4 +23,4 @@ dlmwrite('kmeans20.txt', k20);
 [ix,k24] = kmeans(a,24);
 dlmwrite('kmeans24.txt', k24);
 
-% See after-pca.py
+% See after-kmeans.py
