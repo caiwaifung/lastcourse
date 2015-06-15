@@ -5,22 +5,26 @@ function patch = extract_patches(data)
     n = size(data, 1);
     res = cell(n,1);
     for i = 1:n
+        fprintf('i=%d/%d\n',i,n); fflush(stdout);
+        cnt=0;
         im = data{i,1};
         h = size(im,1);
         w = size(im,2);
         assert(size(im,3) == 3);
         m = (h-5)*(w-5);
         j = 0;
-        res{i,1} = zeros(m, 108);
+        cur = zeros(m, 108);
         for x = 1 : h-5
             for y = 1 : w-5
                 j = j + 1;
-                sub = im([x:x+5], [y:y+5], [1:3]);
-                sub = reshape(sub, [], 108);
-                sub = sub - mean(sub);
-                res{i,1}(j, :) = normr(sub);
+                sub = reshape(im(x:x+5, y:y+5, :), 1, []);
+                cur(j, :) = sub;
             end
         end
+        cur = bsxfun(@minus, cur, mean(cur')');
+        cur = normr(cur);
+        res{i,1} = cur;
+        fprintf(' cnt=%d\n',cnt); fflush(stdout);
     end
     patch = res;
 end
