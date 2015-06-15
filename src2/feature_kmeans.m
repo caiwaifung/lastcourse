@@ -2,6 +2,21 @@
 % [in] kms: K*108
 % [out] f:  N*K
 function features = feature_kmeans(data, kms)
+    features = zeros(size(data, 1), size(kms, 1));
+    BATCH = 100;
+    le = 1;
+    progress.textprogressbar('  files: ');
+    while le <= size(data, 1)
+        progress.textprogressbar(100*le/size(data, 1));
+        ri = min(le + BATCH, size(data, 1));
+        features(le:ri, :) = extract_batch(data(le:ri, 1), kms);
+        le = ri + 1;
+    end
+    progress.textprogressbar('  done');
+end
+
+
+function feature = extract_batch(data, kms)
     num = 0;
     for i = 1:size(data, 1)
         num = num + size(data{i,1}, 1);
@@ -31,7 +46,7 @@ function features = feature_kmeans(data, kms)
     d = normr(d);
     d = max(-d, 0);
 
-    features = zeros(size(data, 1), size(d,2));
+    features = zeros(size(data, 1), size(d, 2));
     for i = 1:size(d,1)
         features(ids(i, 1), :) = features(ids(i, 1), :) + d(i, :);
     end

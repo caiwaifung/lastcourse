@@ -7,7 +7,7 @@ function img = read_and_resize(file_list, file_path, max_width, max_height)
     fclose(fid);
     n = size(lines{1},1);
     res = cell(n,1);
-    progress.textprogressbar('files: ');
+    progress.textprogressbar('  files: ');
     for i = 1:n
         progress.textprogressbar(100*i/n);
         f = lines{1}{i};
@@ -19,5 +19,5 @@ function img = read_and_resize(file_list, file_path, max_width, max_height)
         res{i,1} = double(im) / 256;
     end
     img = res;
-    progress.textprogressbar('done');
+    progress.textprogressbar('  done');
 end

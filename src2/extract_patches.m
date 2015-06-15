@@ -4,7 +4,7 @@
 function patch = extract_patches(data)
     n = size(data, 1);
     res = cell(n,1);
-    progress.textprogressbar('again: ');
+    progress.textprogressbar('  extract: ');
     for i = 1:n
         progress.textprogressbar(100*i/n);
         cnt=0;
@@ -27,6 +27,6 @@ function patch = extract_patches(data)
         res{i,1} = cur;
     end
     
-    progress.textprogressbar('done');
+    progress.textprogressbar('  done');
     patch = res;
 end
