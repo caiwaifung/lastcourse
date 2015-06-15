@@ -97,7 +97,7 @@ for i in range(min(100, len(ans))):
     td0 = '<td align="center" class="user-photo">'
     template = 'alt="" style="height:70px;max-width:70px" align="center"'
     print >>f, '<tr>'
-    print >>f, '{}<img src="../data/image/{}" {}></td>'.format(td0, b[i], template)
+    print >>f, '{}<img src="../data/image/{}" {} class="user-tumb"></td>'.format(td0, b[i], template)
     for k in ans[i]:
         ok_icon = ' <img src="ok-icon.png" alt="" style="height:20px;width:20px">' 
         flag = ok_icon if a[k].split('_')[0] == std else ''
