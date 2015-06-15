@@ -132,5 +132,3 @@ dlmwrite(result_file, [predict_label g]);
 fprintf('------------ done evaluation -----------\n');
 
 fprintf('> generating result...\n');
-labels_data = get_label(data_list);
-final(f, labels_data, g, predict_label);
