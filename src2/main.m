@@ -1,7 +1,7 @@
 clear
 
 % Training data images
-data_list = '../data/data1k.txt';
+data_list = '../data/data5k.txt';
 data_path = '../data/image/';
 
 % Evaluation data images
@@ -23,7 +23,7 @@ whitening_model = '../data/whitening_model.mat';
 image_max_side = 50;
 kmeans_max_sample = 500000;
 kmeans_k = 200;
-kmeans_max_iter = 1000;
+kmeans_max_iter = 100;
 feature_coeff = [1 20];
 
 % Output
@@ -157,3 +157,4 @@ fprintf('------------ done evaluation -----------\n');
 fprintf('> generating result...\n');
 labels_data = get_label(data_list);
 final(f, labels_data, g, predict_label);
+fprintf('------------ done final -----------\n');

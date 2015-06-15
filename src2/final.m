@@ -1,134 +1,30 @@
-clear
+function res = final(data, data_labels, test, test_labels)
+    % want z(i,j) = sum (data(i,k) - test(j,k))^2
+    d2 = sum(data'.^2)';
+    t2 = sum(test'.^2);
+    z = data * test' * (-2);
+    z = bsxfun(@plus, z, d2);
+    z = bsxfun(@plus, z, t2);
 
-% Training data images
-data_list = '../data/data1k.txt';
-data_path = '../data/image/';
+    % tmp(i,j) for data(i) and test(j): 0 if same label; 1 if different
+    tmp = (bsxfun(@minus, data_labels, test_labels') ~= 0);
+    tmp = tmp * 10 + 1;
+    % set large penalty (10x) if different label
+    z2 = z .* tmp; 
 
-% Evaluation data images
-test_list = '../data/query.txt';
-test_path = '../data/image/';
+    res = zeros(size(test,1), 20);
 
-% For training phase
-training=true;
-kmeans_model = '../data/kmeans_model.mat';
-feature_model = '../data/final_feature.mat';
-svm_model = '../data/svm_model.mat';
+    [vals, inds] = sort(z2);
+    res(:, 1:10) = inds(1:10, :)';
 
-% For whitening
-whitening=true;
-whitening_model = '../data/whitening_model.mat';
+    [vals, inds] = sort(z);
+    res(:, 11:20) = inds(1:10, :)';
 
-% Parameters
-image_max_side = 50;
-kmeans_max_sample = 100000;
-kmeans_k = 100;
-feature_coeff = [1 20];
+    %res = zeros(size(test, 1), 2);
+    %[vals, inds] = min(z);
+    %[vals2, inds2] = min(z2);
+    %res(:, 1) = inds2';
+    %res(:, 2) = inds';
 
-% Output
-result_file = '../result/res.txt';
-addpath minFunc;
-
-% Training
-if training
-    % read the data & labels
-    fprintf('> getting labels...\n');
-    labels_data = get_label(data_list);
-    fprintf('> reading images and resizing...\n');
-    img_data = read_and_resize(data_list, data_path, image_max_side, image_max_side);
-
-    % extract patches
-    fprintf('> extracting patches...\n');
-    patch_data = extract_patches(img_data); % num*(N-W+1)^2*P
-    fprintf('> sampling...\n');
-    patch_data_r = sample_patches(patch_data, kmeans_max_sample); % snum*P
-
-    % whitening
-    if whitening
-        fprintf('> whitening...\n');
-
-        fprintf('  - training...\n');
-        whm = whitening_train(patch_data_r);
-
-        fprintf('  - performing...\n');
-        progress.textprogressbar('  progress: ');
-        patch_data_r = whitening_perform(patch_data_r, whm);
-
-        for i = 1:size(patch_data, 1)
-            progress.textprogressbar(100*i/size(patch_data, 1));
-            patch_data{i,1} = whitening_perform(patch_data{i,1}, whm);
-        end
-        progress.textprogressbar('  done');
-    end
-
-    % run kmeans
-    fprintf('> k-means clustering...\n');
-    kms = kmeans_train(patch_data_r, kmeans_k); % matrix of K*P where P=W*W*3
-    save(kmeans_model, 'kms');
-    whos kms;
-    visualize_kmeans;
-
-    % extract features
-    fprintf('> calculating k-means feature...\n');
-    f1 = feature_kmeans(patch_data, kms);
-
-    f1 = f1 * feature_coeff(1);
-    %whos f1;
-    
-    fprintf('> calculating color feature...\n');
-    f2 = feature_cmhsv(img_data);
-    f2 = f2 * feature_coeff(2);
-    %whos f2;
-
-    f = [f1 f2];
-    save(feature_model, 'f');
-    
-    fprintf('> training svm...\n');
-    svms = train_svm(f, labels_data);
-    predict_svm(svms, f, labels_data);
-    save(svm_model, 'svms');
-    
-    fprintf('------------ done training -----------\n');
-else
-    fprintf('> loading models...\n');
-    load(kmeans_model, 'kms');
-    load(feature_model, 'f');
-    load(svm_model, 'svms');
+    dlmwrite('../result2/final.txt', res);
 end
-
-% Main phase
-%  now we have: f (features), kms (kmeans model), svms (svm model)
-
-fprintf('> geting ground truth labels...\n');
-labels_test = get_label(test_list);
-
-fprintf('> reading and resizing test images...\n');
-img_test = read_and_resize(test_list, test_path, image_max_side, image_max_side);
-
-fprintf('> extracting patches for test images...\n');
-patch_test = extract_patches(img_test);
-
-if whitening
-    fprintf('> whitening for test images...\n');
-    progress.textprogressbar('  progress: ');
-    for i = 1:size(patch_test, 1)
-        progress.textprogressbar(100*i/size(patch_test, 1));
-        patch_test{i,1} = whitening_perform(patch_test{i,1}, whm);
-    end
-    progress.textprogressbar('  done');
-end
-
-fprintf('> calculating features for test images...\n');
-g1 = feature_kmeans(patch_test, kms);
-g1 = g1 * feature_coeff(1);
-g2 = feature_cmhsv(img_test);
-g2 = g2 * feature_coeff(2);
-g = [g1 g2];
-
-fprintf('> classifying by svm...\n');
-predict_label = predict_svm(svms, g, labels_test);
-
-dlmwrite(result_file, [predict_label g]);
-
-fprintf('------------ done evaluation -----------\n');
-
-fprintf('> generating result...\n');
