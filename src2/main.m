@@ -27,27 +27,26 @@ if training
     labels_data = get_label(data_list);
     fprintf('> reading images and resizing...\n');
     img_data = read_and_resize(data_list, data_path, image_max_side, image_max_side);
+
     % extract patches
     fprintf('> extracting patches...\n');
     patch_data = extract_patches(img_data); % num*(N-W+1)^2*P
+
     %whos patch_data;
     fprintf('> sampling...\n');
     patch_data_r = sample_patches(patch_data, kmeans_max_sample); % snum*P
-    %whos patch_data_r;
+
     % run kmeans
     fprintf('> k-means clustering...\n');
     kms = kmeans_train(patch_data_r, kmeans_k); % matrix of K*P where P=W*W*3
     save(kmeans_model, 'kms');
     whos kms;
+
     % extract features
-    
     fprintf('> calculating k-means feature...\n');
     f1 = feature_kmeans(patch_data, kms);
-    %whos f1;
-    
     fprintf('> calculating color feature...\n');
     f2 = feature_cmhsv(img_data);
-    %whos f2;
     f = [f1 f2];
     save(feature_model, 'f');
     
