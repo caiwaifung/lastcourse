@@ -4,8 +4,9 @@
 function patch = extract_patches(data)
     n = size(data, 1);
     res = cell(n,1);
+    progress.textprogressbar('fil???: ');
     for i = 1:n
-        fprintf('i=%d/%d\n',i,n); fflush(stdout);
+        progress.textprogressbar(100*i/n);
         cnt=0;
         im = data{i,1};
         h = size(im,1);
@@ -24,7 +25,6 @@ function patch = extract_patches(data)
         cur = bsxfun(@minus, cur, mean(cur')');
         cur = normr(cur);
         res{i,1} = cur;
-        fprintf(' cnt=%d\n',cnt); fflush(stdout);
     end
     patch = res;
 end

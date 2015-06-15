@@ -7,7 +7,7 @@ test_list = '../data/query.txt';
 test_path = '../data/image/';
 
 % For training phase
-training=false;
+training=true;
 kmeans_model = '../data/kmeans_model.mat';
 feature_model = '../data/final_feature.mat';
 svm_model = '../data/svm_model.mat';
@@ -16,6 +16,7 @@ svm_model = '../data/svm_model.mat';
 image_max_side = 50;
 kmeans_max_sample = 1000;
 kmeans_k = 100;
+feature_coeff = [1 200];
 
 % Output
 result_file = '../result/res.txt';
@@ -43,10 +44,12 @@ if training
     
     fprintf('> calculating k-means feature...\n');
     f1 = feature_kmeans(patch_data, kms);
+    f1 = f1 * feature_coeff(1);
     %whos f1;
     
     fprintf('> calculating color feature...\n');
     f2 = feature_cmhsv(img_data);
+    f2 = f2 * feature_coeff(2);
     %whos f2;
     f = [f1 f2];
     save(feature_model, 'f');
@@ -78,7 +81,9 @@ patch_test = extract_patches(img_test);
 
 fprintf('> calculating features for test images...\n');
 g1 = feature_kmeans(patch_test, kms);
+g1 = g1 * feature_coeff(1);
 g2 = feature_cmhsv(img_test);
+g2 = g2 * feature_coeff(2);
 g = [g1 g2];
 
 fprintf('> classifying by svm...\n');

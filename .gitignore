@@ -33,7 +33,7 @@ build*/
 data/image-normalized/*
 *.bmp
 *.jpeg
-KMeans/*
-KMean*
+data/KMeans/*
+KMean*.txt
 ans.txt
 *.html
