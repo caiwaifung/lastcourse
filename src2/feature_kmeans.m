@@ -1,13 +1,14 @@
+% [in] data: {N}*M*108
 function features = feature_kmeans(data, kms)
     num = 0;
-    for i = 1:size(data)
+    for i = 1:size(data, 1)
         num = num + size(data{i}, 1);
         assert(size(data{i}, 2) == 108);
     end
     ids = zeros(num, 1);
     patches = zeros(num, 108);
     cur = 0;
-    for i = 1:size(data)
+    for i = 1:size(data, 1)
         for j = 1:size(data{i}, 1)
             cur = cur + 1;
             ids(cur, 1) = i;
@@ -23,6 +24,9 @@ function features = feature_kmeans(data, kms)
 
     d = (d - mean(d')') ./ var(d')';
     d = max(-d, 0);
-    features = d;
-end
 
+    features = zeros(size(data, 1), 108);
+    for i = 1:size(d,1)
+        features(ids(i, 1), :) += d(i, :);
+    end
+end
