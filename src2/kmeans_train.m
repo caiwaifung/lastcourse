@@ -2,7 +2,7 @@
 % [in] k:  number of centroids
 % [out] kms: K*P doubles (centroids)
 function kms = kmeans_train(data, k)
-    %[idx, c] = kmeans(data, k, 'start', 'uniform', 'emptyaction', 'singleton');
+    %[idx, c] = kmeans(data, k, 'emptyaction', 'singleton', 'MaxIter', 1000);
     %kms = c;
     kms = my_kmeans(data, k);
 end
@@ -13,10 +13,10 @@ function centroids = my_kmeans(data, k)
     p = size(data, 2);
     centroids = randn(k, p);
     
-    iterations = 50;
-    %progress.textprogressbar('  extract: ');
+    iterations = 150;
+    progress.textprogressbar('  extract: ');
     for itr = 1:iterations
-        %progress.textprogressbar(100*itr/iterations);
+        progress.textprogressbar(100*itr/iterations);
 
         % want z(i,j) = distance centroids(i) data(j)
         c2 = sum(centroids'.^2)';
@@ -44,5 +44,5 @@ function centroids = my_kmeans(data, k)
             end
         end
     end
-    %progress.textprogressbar('  done');
+    progress.textprogressbar('  done');
 end
