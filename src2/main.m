@@ -26,8 +26,8 @@ if training
     labels_data = get_label(data_list);
     img_data = read_and_resize(data_list, data_path, image_max_side, image_max_side);
     % extract patches
-    patch_data = extract_patches(img_data);
-    patch_data_r = sample_patches(patch_data, kmeans_max_sample);
+    patch_data = extract_patches(img_data); % num*(N-W+1)^2*P
+    patch_data_r = sample_patches(patch_data, kmeans_max_sample); % snum*P
     % run kmeans
     kms = kmeans_train(patch_data_r, kmeans_k); % matrix of K*P where P=W*W*3
     save(kmeans_model, 'kms');
