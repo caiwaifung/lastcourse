@@ -29,7 +29,7 @@ if training
         patch_data = extract_patches(img_data);
         patch_data_r = sample_patches(patch_data, kmeans_max_sample);
         % run kmeans
-        kms = kmeans_train(patch_data_r, kmeans_k);
+        kms = kmeans_train(patch_data_r, kmeans_k); % matrix of K*P where P=W*W*3
         save(kmeans_model, 'kms');
         % extract features
         f1 = feature_kmeans(patch_data, kms);
