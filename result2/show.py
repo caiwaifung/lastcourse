@@ -40,7 +40,7 @@ ans = [line.strip() for line in f.readlines()]
 def func(x):
     r = x[0:3]
     rs = set(r)
-    for i in x[10:13]:
+    for i in x[10:]:
         if not i in rs:
             r.append(i)
             rs.add(i)
@@ -78,30 +78,33 @@ print 'accuracy2:', int(float(cnt2) / float(len(ans)) * 10000) / 100., '%'
 f = open('a.html', 'w')
 print >>f, '<!DOCTYPE html>'
 print >>f, '<html> <body>'
-print >>f, '<table>'
-#print >>f, '<tr>'
-#print >>f, '<td align="center">Query</td>'
-#print >>f, '<td align="center"></td>'
-#print >>f, '<td align="center">1st Closest</td>'
-#print >>f, '<td align="center">2nd Closest</td>'
-#print >>f, '<td align="center">3rd Closest</td>'
-#print >>f, '<td align="center">4th Closest</td>'
-#print >>f, '<td align="center">5th Closest</td>'
-#print >>f, '</tr>'
+print >>f, '<link rel="stylesheet" type="text/css" href="a.css">'
+print >>f, '<div class="box-table">'
+
+print >>f, '<h1 class="description"> The Final Results: Relating Images.  </h1>'
+print >>f, '<table align="center" border="1">'
+print >>f, '<thead>'
+print >>f, '<th align="center" style="max-width:70px">Query</th>'
+print >>f, '<th align="center" style="max-width:70px">Closest In Category</th>'
+print >>f, '<th align="center" style="max-width:70px">2nd In Category</th>'
+print >>f, '<th align="center" style="max-width:70px">3rd In Category</th>'
+print >>f, '<th align="center" style="max-width:70px">Closest Globally</th>'
+print >>f, '<th align="center" style="max-width:70px">2nd Globally</th>'
+print >>f, '</thead>'
 for i in range(min(100, len(ans))):
     std = b[i].split('_')[0]
     td = '<td align="center">'
-    template = 'alt="" style="height:50px;max-width:70px" align="right"'
+    td0 = '<td align="center" class="user-photo">'
+    template = 'alt="" style="height:70px;max-width:70px" align="center"'
     print >>f, '<tr>'
-    print >>f, '{}<img src="../data/image/{}" {}></td>'.format(td, b[i], template)
-    print >>f, '<td width="10"></td>'
+    print >>f, '{}<img src="../data/image/{}" {}></td>'.format(td0, b[i], template)
     for k in ans[i]:
-        ok_icon = '<img src="ok-icon.png" alt="" style="height:15px;width:15px">' 
+        ok_icon = ' <img src="ok-icon.png" alt="" style="height:20px;width:20px">' 
         flag = ok_icon if a[k].split('_')[0] == std else ''
-        print >>f, '{}<img src="../data/image/{}" {}></td>'.format(td, a[k], template)
-        print >>f, '<td>{}</td>'.format(flag)
+        print >>f, '{}<img src="../data/image/{}" {}>{}</td>'.format(td, a[k], template, flag)
     print >>f, '</tr>'
 print >>f, '</table>'
+print >>f, '</div>'
 print >>f, '</body> </html>'
 f.close()
 
