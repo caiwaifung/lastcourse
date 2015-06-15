@@ -14,6 +14,10 @@ kmeans_model = '../data/kmeans_model.mat';
 feature_model = '../data/final_feature.mat';
 svm_model = '../data/svm_model.mat';
 
+% For whitening
+whitening=true;
+whitening_model = '../data/whitening_model.mat';
+
 % Parameters
 image_max_side = 50;
 kmeans_max_sample = 100000;
@@ -35,10 +39,26 @@ if training
     % extract patches
     fprintf('> extracting patches...\n');
     patch_data = extract_patches(img_data); % num*(N-W+1)^2*P
-
-    %whos patch_data;
     fprintf('> sampling...\n');
     patch_data_r = sample_patches(patch_data, kmeans_max_sample); % snum*P
+
+    % whitening
+    if whitening
+        fprintf('> whitening...\n');
+
+        fprintf('  - training...\n');
+        whm = whitening_train(patch_data_r);
+
+        fprintf('  - performing...\n');
+        progress.textprogressbar('  progress: ');
+        patch_data_r = whitening_perform(patch_data_r, whm);
+
+        for i = 1:size(patch_data, 1)
+            progress.textprogressbar(100*i/size(patch_data, 1));
+            patch_data{i,1} = whitening_perform(patch_data{i,1}, whm);
+        end
+        progress.textprogressbar('  done');
+    end
 
     % run kmeans
     fprintf('> k-means clustering...\n');
@@ -86,6 +106,16 @@ img_test = read_and_resize(test_list, test_path, image_max_side, image_max_side)
 
 fprintf('> extracting patches for test images...\n');
 patch_test = extract_patches(img_test);
+
+if whitening
+    fprintf('> whitening for test images...\n');
+    progress.textprogressbar('  progress: ');
+    for i = 1:size(patch_test, 1)
+        progress.textprogressbar(100*i/size(patch_test, 1));
+        patch_test{i,1} = whitening_perform(patch_test{i,1}, whm);
+    end
+    progress.textprogressbar('  done');
+end
 
 fprintf('> calculating features for test images...\n');
 g1 = feature_kmeans(patch_test, kms);
