@@ -53,6 +53,6 @@ patch_test = patch_images(img_test);
 g1 = kmeans_feature(patch_test, kms);
 g2 = cmhsv_feature(img_test);
 g = [g1 g2];
-predict_label = predict_svm(svms, g);
+predict_label = predict_svm(svms, g, labels_test);
 
 dlmwrite(result_file, [predict_label g]);
