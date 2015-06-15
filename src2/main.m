@@ -21,7 +21,7 @@ whitening_model = '../data/whitening_model.mat';
 
 % Parameters
 image_max_side = 50;
-kmeans_max_sample = 50000;
+kmeans_max_sample = 100000;
 kmeans_k = 200;
 feature_coeff = [1 20];
 
