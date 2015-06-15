@@ -22,31 +22,31 @@ result_file = '../result/res.txt';
 
 % Training
 if training
-        % read the data & labels
-        labels_data = get_label(data_list);
-        img_data = read_and_resize(data_list, data_path, image_max_side, image_max_side);
-        % extract patches
-        patch_data = extract_patches(img_data);
-        patch_data_r = sample_patches(patch_data, kmeans_max_sample);
-        % run kmeans
-        kms = kmeans_train(patch_data_r, kmeans_k); % matrix of K*P where P=W*W*3
-        save(kmeans_model, 'kms');
-        % extract features
-        f1 = feature_kmeans(patch_data, kms);
-        f2 = feature_cmhsv(img_data);
-        f = [f1 f2];
-        save(feature_model, 'f');
+    % read the data & labels
+    labels_data = get_label(data_list);
+    img_data = read_and_resize(data_list, data_path, image_max_side, image_max_side);
+    % extract patches
+    patch_data = extract_patches(img_data);
+    patch_data_r = sample_patches(patch_data, kmeans_max_sample);
+    % run kmeans
+    kms = kmeans_train(patch_data_r, kmeans_k); % matrix of K*P where P=W*W*3
+    save(kmeans_model, 'kms');
+    % extract features
+    f1 = feature_kmeans(patch_data, kms);
+    f2 = feature_cmhsv(img_data);
+    f = [f1 f2];
+    save(feature_model, 'f');
 
-        svms = train_svm(f, labels_data);
-        save(svm_model, 'svms');
+    svms = train_svm(f, labels_data);
+    save(svm_model, 'svms');
 else
-        load(kmeans_model, 'kms');
-        load(feature_model, 'f');
-        load(svm_model, 'svms');
+    load(kmeans_model, 'kms');
+    load(feature_model, 'f');
+    load(svm_model, 'svms');
 end
 
 % Main phase
-%   now we have: f (features), kms (kmeans model), svms (svm model)
+%  now we have: f (features), kms (kmeans model), svms (svm model)
 labels_test = get_label(test_list);
 img_test = read_and_resize(test_list, test_path, image_max_side, image_max_side);
 patch_test = patch_images(img_test);
