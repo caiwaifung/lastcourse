@@ -8,54 +8,15 @@ function res = final(data, data_labels, test, test_labels)
     z = bsxfun(@plus, z, d2);
     z = bsxfun(@plus, z, t2);
 
-    %[vals, inds] = min(z);
-    %res = inds';
-    for i = 1:size(test, 1)
-        best = 1e50;
-        bestpos = -1;
-        for j = 1:size(data, 1)
-            if data_labels(j) != test_labels(i)
-                continue
-            end
-            dis = z(j, i);
-            if dis < best
-                best = dis;
-                bestpos = j;
-            end
-        end
-        res(i, 1) = bestpos;
-    end
-    for i = 1:size(test, 1)
-        best = 1e50;
-        bestpos = -1;
-        for j = 1:size(data, 1)
-            dis = z(j, i);
-            if dis < best
-                best = dis;
-                bestpos = j;
-            end
-        end
-        res(i, 2) = bestpos;
-    end
+    tmp = (bsxfun(@minus, data_labels, test_labels') ~= 0); % 0 if same label; 1 if different
+    tmp = tmp * 10 + 1;
+    z2 = z .* tmp; % set large penalty (10x) if different label
 
-%    for i = 1:size(test, 1)
-%        fprintf('i=%d/%d: ',i,size(test,1)); fflush(stdout);
-%        best = 1e50;
-%        bestpos = -1;
-%        for j = 1:size(data, 1)
-%            if data_labels(j) != test_labels(i)
-%                continue
-%            end
-%            x = test(i, :);
-%            y = data(j, :);
-%            dis = norm(x - y);
-%            if dis < best
-%                best = dis;
-%                bestpos = j;
-%            end
-%        end
-%        fprintf('  %d %.4f\n',bestpos,best);
-%        res(i, 1) = bestpos;
-%    end
+    [vals, inds] = min(z);
+    [vals2, inds2] = min(z2);
+
+    res(:, 1) = inds2';
+    res(:, 2) = inds';
+
     dlmwrite('../result2/final.txt', res);
 end

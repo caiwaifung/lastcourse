@@ -39,7 +39,8 @@ for label in res:
 '''
 f = open('../result2/final.txt', 'r')
 ans = [line.strip() for line in f.readlines()]
-ans = [[int(x) - 1 for x in line.split(',')] for line in f.readlines()]
+ans = [[int(x) - 1 for x in line.split(',')] for line in ans]
+#ans = [[int(line.strip().split(',')[0]) - 1] for line in ans]
 f.close()
 
 
