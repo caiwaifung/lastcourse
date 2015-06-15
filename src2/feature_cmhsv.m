@@ -6,10 +6,10 @@
 %   [in] img: num*n*m*3 doubles, in range [0, 1]
 %   [out] f:  num*k doubles
 function features = feature_cmhsv(img_data)
-    num = size(img_data);
+    num = size(img_data, 1);
     features = zeros(num, 18)
     for i = 1:num
-        img = img_data{i};
+        img = img_data{i, 1};
         assert(size(size(img), 2) == 3); % n*m*k doubles
         assert(size(img, 3) == 3); % n*m*3 doubles
 

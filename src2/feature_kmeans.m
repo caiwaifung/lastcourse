@@ -1,4 +1,6 @@
 % [in] data: {N}*M*108
+% [in] kms: K*108
+% [out] f:  N*K
 function features = feature_kmeans(data, kms)
     num = 0;
     for i = 1:size(data, 1)
