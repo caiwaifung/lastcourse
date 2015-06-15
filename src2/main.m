@@ -10,6 +10,7 @@ test_path = '../data/image/';
 
 % For training phase
 training=true;
+skip_feature=true;
 kmeans_model = '../data/kmeans_model.mat';
 feature_model = '../data/final_feature.mat';
 svm_model = '../data/svm_model.mat';
@@ -29,37 +30,44 @@ if training
     % read the data & labels
     fprintf('> getting labels...\n');
     labels_data = get_label(data_list);
-    fprintf('> reading images and resizing...\n');
-    img_data = read_and_resize(data_list, data_path, image_max_side, image_max_side);
 
-    % extract patches
-    fprintf('> extracting patches...\n');
-    patch_data = extract_patches(img_data); % num*(N-W+1)^2*P
-
-    %whos patch_data;
-    fprintf('> sampling...\n');
-    patch_data_r = sample_patches(patch_data, kmeans_max_sample); % snum*P
-
-    % run kmeans
-    fprintf('> k-means clustering...\n');
-    kms = kmeans_train(patch_data_r, kmeans_k); % matrix of K*P where P=W*W*3
-    save(kmeans_model, 'kms');
-    whos kms;
-    visualize_kmeans;
-
-    % extract features
-    fprintf('> calculating k-means feature...\n');
-    f1 = feature_kmeans(patch_data, kms);
-
-    f1 = f1 * feature_coeff(1);
-    %whos f1;
+    if skip_feature
+        fprintf('> loading models...\n');
+        load(kmeans_model, 'kms');
+        load(feature_model, 'f');
+    else
+        fprintf('> reading images and resizing...\n');
+        img_data = read_and_resize(data_list, data_path, image_max_side, image_max_side);
+        % extract patches
+        fprintf('> extracting patches...\n');
+        patch_data = extract_patches(img_data); % num*(N-W+1)^2*P
     
-    fprintf('> calculating color feature...\n');
-    f2 = feature_cmhsv(img_data);
-    f2 = f2 * feature_coeff(2);
-    %whos f2;
-
-    f = [f1 f2];
+        %whos patch_data;
+        fprintf('> sampling...\n');
+        patch_data_r = sample_patches(patch_data, kmeans_max_sample); % snum*P
+    
+        % run kmeans
+        fprintf('> k-means clustering...\n');
+        kms = kmeans_train(patch_data_r, kmeans_k); % matrix of K*P where P=W*W*3
+        save(kmeans_model, 'kms');
+        whos kms;
+        visualize_kmeans;
+    
+        % extract features
+        fprintf('> calculating k-means feature...\n');
+        f1 = feature_kmeans(patch_data, kms);
+    
+        f1 = f1 * feature_coeff(1);
+        %whos f1;
+    
+        fprintf('> calculating color feature...\n');
+        f2 = feature_cmhsv(img_data);
+        f2 = f2 * feature_coeff(2);
+        %whos f2;
+    
+        f = [f1 f2];
+    
+    end
     save(feature_model, 'f');
     
     fprintf('> training svm...\n');

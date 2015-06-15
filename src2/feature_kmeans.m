@@ -16,7 +16,7 @@ function features = feature_kmeans(data, kms)
 end
 
 
-function feature = extract_batch(data, kms)
+function features = extract_batch(data, kms)
     num = 0;
     for i = 1:size(data, 1)
         num = num + size(data{i,1}, 1);
