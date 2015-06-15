@@ -7,7 +7,7 @@ test_list = '../data/query.txt';
 test_path = '../data/image/';
 
 % For training phase
-training=true;
+training=false;
 kmeans_model = '../data/kmeans_model.mat';
 feature_model = '../data/final_feature.mat';
 svm_model = '../data/svm_model.mat';

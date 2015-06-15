@@ -8,5 +8,6 @@ for i=1:n
     s = (s - mn) / (mx - mn);
     s = imresize(s, 32);
     imwrite(s, ['../data/KMeans_visualize/' int2str(i) '.png'], 'PNG');
-    fprintf('See ../data/KMeans_visualize/*.png\n');
+
 end
+fprintf('See ../data/KMeans_visualize/*.png\n');
