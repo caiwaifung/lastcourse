@@ -1,7 +1,7 @@
 clear
 
 % Training data images
-data_list = '../data/data5k.txt';
+data_list = '../data/data1k.txt';
 data_path = '../data/image/';
 
 % Evaluation data images
@@ -21,8 +21,9 @@ whitening_model = '../data/whitening_model.mat';
 
 % Parameters
 image_max_side = 50;
-kmeans_max_sample = 100000;
+kmeans_max_sample = 500000;
 kmeans_k = 200;
+kmeans_max_iter = 1000;
 feature_coeff = [1 20];
 
 % Output
