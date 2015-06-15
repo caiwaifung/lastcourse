@@ -1,3 +1,5 @@
+clear
+
 % Training data images
 data_list = '../data/data1k.txt';
 data_path = '../data/image/';
@@ -14,12 +16,13 @@ svm_model = '../data/svm_model.mat';
 
 % Parameters
 image_max_side = 50;
-kmeans_max_sample = 1000;
+kmeans_max_sample = 100000;
 kmeans_k = 100;
-feature_coeff = [1 200];
+feature_coeff = [1 20];
 
 % Output
 result_file = '../result/res.txt';
+addpath minFunc;
 
 % Training
 if training
@@ -42,6 +45,7 @@ if training
     kms = kmeans_train(patch_data_r, kmeans_k); % matrix of K*P where P=W*W*3
     save(kmeans_model, 'kms');
     whos kms;
+    visualize_kmeans;
 
     % extract features
     fprintf('> calculating k-means feature...\n');

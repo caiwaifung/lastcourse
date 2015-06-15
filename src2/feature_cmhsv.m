@@ -20,6 +20,11 @@ function features = feature_cmhsv(img_data)
         m = mean(data);
         r = std(data);
         s = skewness(data);
+        for j=1:6
+            if isnan(s(j))
+                s(j) = 0;
+            end
+        end
         features(i, :) = [m r s];
     end
 end
