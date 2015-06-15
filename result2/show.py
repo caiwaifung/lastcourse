@@ -17,6 +17,7 @@ f = open('../data/query.txt', 'r')
 b = [x.strip() for x in f.readlines()]
 f.close()
 
+'''
 labels = ['',
     'n01613177', 'n01923025', 'n02278980', 'n03767203', 'n03877845',
     'n04515003', 'n04583620', 'n07897438', 'n10247358', 'n11669921']
@@ -35,6 +36,12 @@ for label in res:
             if len(cur) >= 3:
                 break
     ans.append(cur)
+'''
+f = open('../result2/final.txt', 'r')
+ans = [line.strip() for line in f.readlines()]
+ans = [[int(x) - 1 for x in line.split(',')] for line in f.readlines()]
+f.close()
+
 
 #f = open('ans0.txt', 'r')
 #ans0 = [int(x.split(' ')[0]) for x in f.readlines()]
@@ -53,6 +60,7 @@ print >>f, '<table>'
 #print >>f, '<td align="center">4th Closest</td>'
 #print >>f, '<td align="center">5th Closest</td>'
 #print >>f, '</tr>'
+correct_cnt = 0
 for i in range(min(100, len(ans))):
     std = b[i].split('_')[0]
     td = '<td align="center">'
@@ -63,10 +71,12 @@ for i in range(min(100, len(ans))):
     for k in ans[i]:
         ok_icon = '<img src="ok-icon.png" alt="" style="height:15px;width:15px">' 
         flag = ok_icon if a[k].split('_')[0] == std else ''
-        if k != ans[i][0]: flag = ''
+        if flag != '': correct_cnt += 1
         print >>f, '{}<img src="../data/image/{}" {}></td>'.format(td, a[k], template)
         print >>f, '<td>{}</td>'.format(flag)
     print >>f, '</tr>'
 print >>f, '</table>'
 print >>f, '</body> </html>'
 f.close()
+
+print correct_cnt

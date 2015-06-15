@@ -134,3 +134,4 @@ fprintf('------------ done evaluation -----------\n');
 fprintf('> generating result...\n');
 labels_data = get_label(data_list);
 final(f, labels_data, g, predict_label);
+fprintf('------------ done final -----------\n');
