@@ -8,7 +8,7 @@ function patch = extract_patches(data)
         im = data{i,1};
         h = size(im,1);
         w = size(im,2);
-        assert(size(im,3) == 1);
+        assert(size(im,3) == 3);
         m = (h-5)*(w-5);
         j = 0;
         res{i,1} = zeros(m, 108);
