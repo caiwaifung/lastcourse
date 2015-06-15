@@ -34,6 +34,7 @@ data/image-normalized/*
 *.bmp
 *.jpeg
 data/KMeans/*
+data/KMeans_visualize/*.png
 KMean*.txt
 ans.txt
 *.html

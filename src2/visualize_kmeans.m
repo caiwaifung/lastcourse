@@ -1,5 +1,3 @@
-load('../data/kmeans_model.mat', 'kms');
-
 n = size(kms, 1);
 for i=1:n
     s = reshape(kms(i,:), [], 6, 3);
