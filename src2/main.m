@@ -1,5 +1,5 @@
 % Training data images
-data_list = '../data/data20.txt';
+data_list = '../data/data1k.txt';
 data_path = '../data/image/';
 
 % Evaluation data images
