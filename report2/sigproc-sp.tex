@@ -92,7 +92,20 @@ The sampled patches is a matrix $P$ of size $t$-by-$p$.
 
 \subsection{Whitening}
 
-%TODO
+Directly compute the square distance between two $6\times 6\times 3$ patches is not
+very reasonable. We use the idea of whitening from \cite{coates2011analysis} to
+transform our patches into normalized $108$-length real vector, so that when
+consider the transformed patch as a random variable, the mean of every entry
+is $0$ and the variance of every entry is $1$. Whitening could reduce possible
+bias in patch component, and returns more robust K-Means result.
+
+This can be done by a PCA transform:
+\begin{equation}
+        X_{\text{wh}}=\text{diag}\left(1/\sqrt{\text{diag}(S)+\epsilon}\right)\times U^T
+        \times (X-\mu),
+\end{equation}
+where the covariance matrix SVD decomposite into $U,S,V$, and $\mu$ is the mean
+$X$. We use the built-in SVD function in matlab to achieve high efficiency.
 
 \subsection{K-Means Clustering}
 
@@ -102,6 +115,14 @@ We do the K-Means clustering for those patches,
 The final centroids can be represented by a matrix $C$ of size $k$-by-$p$.
 
 %TODO more
+
+\begin{center}
+        Without Whitening
+        \includegraphics[width=0.8\linewidth]{004.png}
+
+        With Whitening
+        \includegraphics[width=0.8\linewidth]{005.png}
+\end{center}
 
 \subsection{Feature Extracting}
 
