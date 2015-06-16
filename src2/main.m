@@ -5,11 +5,11 @@ data_list = '../data/data5k.txt';
 data_path = '../data/image/';
 
 % Evaluation data images
-test_list = '../data/query.txt';
-test_path = '../data/image/';
+test_list = '../data/final_image/0.txt';
+test_path = '../data/final_image/';
 
 % For training phase
-training=true;
+training=false;
 skip_feature=false;
 kmeans_model = '../data/kmeans_model.mat';
 feature_model = '../data/final_feature.mat';
@@ -21,7 +21,7 @@ whitening_model = '../data/whitening_model.mat';
 
 % Parameters
 image_max_side = 50;
-kmeans_max_sample = 500000;
+kmeans_max_sample = 1000000;
 kmeans_k = 200;
 kmeans_max_iter = 100;
 feature_coeff = [1 20];
@@ -122,7 +122,8 @@ end
 %  now we have: f (features), kms (kmeans model), svms (svm model)
 
 fprintf('> geting ground truth labels...\n');
-labels_test = get_label(test_list);
+% labels_test = get_label(test_list);
+labels_test = zeros(2000,1);
 
 fprintf('> reading and resizing test images...\n');
 img_test = read_and_resize(test_list, test_path, image_max_side, image_max_side);

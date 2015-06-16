@@ -1,0 +1,150 @@
+1-ColorMomentHSV9:
+#correct_first: 153
+1-PCA4:
+#correct_first: 116
+1-PCA8:
+#correct_first: 158
+1-PCA12:
+#correct_first: 181
+1-PCA16:
+#correct_first: 181
+1-PCA20:
+#correct_first: 185
+1-PCA24:
+#correct_first: 180
+1-PCA30:
+#correct_first: 177
+1-KMeans4:
+#correct_first: 126
+1-KMeans8:
+#correct_first: 124
+1-KMeans12:
+#correct_first: 132
+1-KMeans16:
+#correct_first: 133
+1-KMeans20:
+#correct_first: 132
+1-KMeans24:
+#correct_first: 121
+1-Composite25:
+#correct_first: 201
+2-ColorMomentHSV9:
+#correct_first: 174
+2-PCA4:
+#correct_first: 130
+2-PCA8:
+#correct_first: 170
+2-PCA12:
+#correct_first: 190
+2-PCA16:
+#correct_first: 198
+2-PCA20:
+#correct_first: 200
+2-PCA24:
+#correct_first: 194
+2-PCA30:
+#correct_first: 198
+2-KMeans4:
+#correct_first: 132
+2-KMeans8:
+#correct_first: 155
+2-KMeans12:
+#correct_first: 154
+2-KMeans16:
+#correct_first: 154
+2-KMeans20:
+#correct_first: 160
+2-KMeans24:
+#correct_first: 161
+2-Composite25:
+#correct_first: 219
+3-ColorMomentHSV9:
+#correct_first: 178
+3-PCA4:
+#correct_first: 133
+3-PCA8:
+#correct_first: 172
+3-PCA12:
+#correct_first: 199
+3-PCA16:
+#correct_first: 205
+3-PCA20:
+#correct_first: 207
+3-PCA24:
+#correct_first: 201
+3-PCA30:
+#correct_first: 205
+3-KMeans4:
+#correct_first: 147
+3-KMeans8:
+#correct_first: 154
+3-KMeans12:
+#correct_first: 158
+3-KMeans16:
+#correct_first: 165
+3-KMeans20:
+#correct_first: 157
+3-KMeans24:
+#correct_first: 153
+3-Composite25:
+#correct_first: 230
+4-ColorMomentHSV9:
+#correct_first: 190
+4-PCA4:
+#correct_first: 141
+4-PCA8:
+#correct_first: 176
+4-PCA12:
+#correct_first: 205
+4-PCA16:
+#correct_first: 206
+4-PCA20:
+#correct_first: 213
+4-PCA24:
+#correct_first: 212
+4-PCA30:
+#correct_first: 203
+4-KMeans4:
+#correct_first: 148
+4-KMeans8:
+#correct_first: 155
+4-KMeans12:
+#correct_first: 154
+4-KMeans16:
+#correct_first: 167
+4-KMeans20:
+#correct_first: 159
+4-KMeans24:
+#correct_first: 167
+4-Composite25:
+#correct_first: 235
+5-ColorMomentHSV9:
+#correct_first: 195
+5-PCA4:
+#correct_first: 151
+5-PCA8:
+#correct_first: 183
+5-PCA12:
+#correct_first: 208
+5-PCA16:
+#correct_first: 217
+5-PCA20:
+#correct_first: 225
+5-PCA24:
+#correct_first: 221
+5-PCA30:
+#correct_first: 217
+5-KMeans4:
+#correct_first: 147
+5-KMeans8:
+#correct_first: 161
+5-KMeans12:
+#correct_first: 158
+5-KMeans16:
+#correct_first: 173
+5-KMeans20:
+#correct_first: 164
+5-KMeans24:
+#correct_first: 178
+5-Composite25:
+#correct_first: 240

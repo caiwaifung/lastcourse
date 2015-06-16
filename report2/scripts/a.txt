@@ -1,0 +1,150 @@
+1-ColorMomentHSV9:
+#access : 46.11908646
+1-PCA4:
+#access : 37.189233279
+1-PCA8:
+#access : 68.4241435563
+1-PCA12:
+#access : 77.955954323
+1-PCA16:
+#access : 82.4632952692
+1-PCA20:
+#access : 81.5530179445
+1-PCA24:
+#access : 83.1158238173
+1-PCA30:
+#access : 123.820554649
+1-KMeans4:
+#access : 16.013050571
+1-KMeans8:
+#access : 17.4959216966
+1-KMeans12:
+#access : 20.9086460033
+1-KMeans16:
+#access : 22.2251223491
+1-KMeans20:
+#access : 25.2528548124
+1-KMeans24:
+#access : 20.6835236542
+1-Composite25:
+#access : 80.0114192496
+2-ColorMomentHSV9:
+#access : 67.6998368679
+2-PCA4:
+#access : 53.3115823817
+2-PCA8:
+#access : 107.72593801
+2-PCA12:
+#access : 129.913539967
+2-PCA16:
+#access : 135.44045677
+2-PCA20:
+#access : 137.838499184
+2-PCA24:
+#access : 135.719412724
+2-PCA30:
+#access : 207.486133768
+2-KMeans4:
+#access : 19.766721044
+2-KMeans8:
+#access : 21.8384991843
+2-KMeans12:
+#access : 25.766721044
+2-KMeans16:
+#access : 28.4094616639
+2-KMeans20:
+#access : 35.2610114192
+2-KMeans24:
+#access : 27.8140293638
+2-Composite25:
+#access : 136.83360522
+3-ColorMomentHSV9:
+#access : 88.6982055465
+3-PCA4:
+#access : 71.3768352365
+3-PCA8:
+#access : 145.872756933
+3-PCA12:
+#access : 174.504078303
+3-PCA16:
+#access : 190.22675367
+3-PCA20:
+#access : 196.484502447
+3-PCA24:
+#access : 192.872756933
+3-PCA30:
+#access : 281.497553018
+3-KMeans4:
+#access : 22.2463295269
+3-KMeans8:
+#access : 24.4453507341
+3-KMeans12:
+#access : 30.969004894
+3-KMeans16:
+#access : 33.898858075
+3-KMeans20:
+#access : 39.2528548124
+3-KMeans24:
+#access : 30.2088091354
+3-Composite25:
+#access : 202.463295269
+4-ColorMomentHSV9:
+#access : 98.2495921697
+4-PCA4:
+#access : 76.7292006525
+4-PCA8:
+#access : 176.110929853
+4-PCA12:
+#access : 217.851549755
+4-PCA16:
+#access : 236.265905383
+4-PCA20:
+#access : 253.732463295
+4-PCA24:
+#access : 248.021207178
+4-PCA30:
+#access : 351.704730832
+4-KMeans4:
+#access : 23.5367047308
+4-KMeans8:
+#access : 25.8841761827
+4-KMeans12:
+#access : 34.854812398
+4-KMeans16:
+#access : 37.2561174551
+4-KMeans20:
+#access : 39.6753670473
+4-KMeans24:
+#access : 33.4616639478
+4-Composite25:
+#access : 254.969004894
+5-ColorMomentHSV9:
+#access : 117.097879282
+5-PCA4:
+#access : 81.8319738989
+5-PCA8:
+#access : 208.415986949
+5-PCA12:
+#access : 252.611745514
+5-PCA16:
+#access : 280.058727569
+5-PCA20:
+#access : 302.898858075
+5-PCA24:
+#access : 297.463295269
+5-PCA30:
+#access : 416.425774878
+5-KMeans4:
+#access : 24.7177814029
+5-KMeans8:
+#access : 26.6639477977
+5-KMeans12:
+#access : 37.4355628059
+5-KMeans16:
+#access : 38.1468189233
+5-KMeans20:
+#access : 44.4861337684
+5-KMeans24:
+#access : 34.7960848287
+5-Composite25:
+#access : 305.484502447

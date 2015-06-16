@@ -13,7 +13,7 @@ f = open('../data/{}.txt'.format(sys.argv[1]), 'r')
 a = [x.strip() for x in f.readlines()]
 f.close()
 
-f = open('../data/query.txt', 'r')
+f = open('../data/final_image/0.txt', 'r')
 b = [x.strip() for x in f.readlines()]
 f.close()
 
@@ -57,23 +57,24 @@ f.close()
 #f.close()
 cnt = 0
 cnt2 = 0
-for i in range(len(ans)):
-    k = ans[i][0]
-    cur = a[k].split('_')[0]
-    std = b[i].split('_')[0]
-    if cur == std:
-        cnt += 1
-    for k in ans[i]:
-        cur = a[k].split('_')[0]
-        if cur == std:
-            cnt2 += 1
-            break
-
-print 'correct: ', cnt
-print 'accuracy:', int(float(cnt) / float(len(ans)) * 10000) / 100., '%'
-print 'correct2: ', cnt2
-print 'accuracy2:', int(float(cnt2) / float(len(ans)) * 10000) / 100., '%'
-
+# for i in range(len(ans)):
+#     k = ans[i][0]
+#     cur = a[k].split('_')[0]
+#     std = b[i].split('_')[0]
+#     if cur == std:
+#         cnt += 1
+#     for k in ans[i]:
+#         cur = a[k].split('_')[0]
+#         if cur == std:
+#             cnt2 += 1
+#             break
+# 
+# print 'correct: ', cnt
+# print 'accuracy:', int(float(cnt) / float(len(ans)) * 10000) / 100., '%'
+# print 'correct2: ', cnt2
+# print 'accuracy2:', int(float(cnt2) / float(len(ans)) * 10000) / 100., '%'
+# 
+side=150
 
 f = open('a.html', 'w')
 print >>f, '<!DOCTYPE html>'
@@ -84,20 +85,21 @@ print >>f, '<div class="box-table">'
 print >>f, '<h1 class="description"> The Final Results: Relating Images.  </h1>'
 print >>f, '<table align="center" border="1">'
 print >>f, '<thead>'
-print >>f, '<th align="center" style="max-width:70px">Query</th>'
-print >>f, '<th align="center" style="max-width:70px">Closest In Category</th>'
-print >>f, '<th align="center" style="max-width:70px">2nd In Category</th>'
-print >>f, '<th align="center" style="max-width:70px">3rd In Category</th>'
-print >>f, '<th align="center" style="max-width:70px">Closest Globally</th>'
-print >>f, '<th align="center" style="max-width:70px">2nd Globally</th>'
+print >>f, '<th align="center" style="max-width:{}px">Query</th>'.format(side)
+print >>f, '<th align="center" style="max-width:{}px">Closest In Category</th>'.format(side)
+print >>f, '<th align="center" style="max-width:{}px">2nd In Category</th>'.format(side)
+print >>f, '<th align="center" style="max-width:{}px">3rd In Category</th>'.format(side)
+print >>f, '<th align="center" style="max-width:{}px">ClosestGlobally</th>'.format(side)
+print >>f, '<th align="center" style="max-width:{}px">2nd Globally</th>'.format(side)
 print >>f, '</thead>'
 for i in range(min(100, len(ans))):
-    std = b[i].split('_')[0]
+    #std = b[i].split('_')[0]
+    std="0"
     td = '<td align="center">'
     td0 = '<td align="center" class="user-photo">'
-    template = 'alt="" style="height:70px;max-width:70px" align="center"'
+    template = 'alt="" style="height:{}px;max-width:{}px" align="center"'.format(side,side)
     print >>f, '<tr>'
-    print >>f, '{}<img src="../data/image/{}" {} class="user-tumb"></td>'.format(td0, b[i], template)
+    print >>f, '{}<img src="../data/final_image/{}" {}></td>'.format(td0, b[i], template)
     for k in ans[i]:
         ok_icon = ' <img src="ok-icon.png" alt="" style="height:20px;width:20px">' 
         flag = ok_icon if a[k].split('_')[0] == std else ''

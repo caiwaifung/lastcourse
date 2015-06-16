@@ -13,7 +13,7 @@ function centroids = my_kmeans(data, k)
     p = size(data, 2);
     centroids = randn(k, p);
     
-    iterations = 150;
+    iterations = 500;
     progress.textprogressbar('  extract: ');
     for itr = 1:iterations
         progress.textprogressbar(100*itr/iterations);
