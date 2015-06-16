@@ -14,13 +14,11 @@ Image Retrieval}
 % of EIGHT authors. SIX appear on the 'first-page' (for formatting
 % reasons) and the remaining two appear in the \additionalauthors section.
 %
-\author{\alignauthor
-Qiwei Feng\\
+\author{\alignauthor{Qiwei Feng}\\
        \affaddr{2011011250, IIIS-10}\\
        \affaddr{Tsinghua University}\\
        \email{gdfqw93@163.com}
-\alignauthor
-Pufan He\\
+   \alignauthor{Pufan He}\\
        \affaddr{2011011307, IIIS-10}\\
        \affaddr{Tsinghua University}\\
        \email{hpfdf@126.com}
@@ -33,7 +31,7 @@ Pufan He\\
         retrieval) based on multiclass classification and K-Means feature. Our
         training phase includes image resizing, image patch extraction, patch
         sampling, PCA whitening, K-Means for patches, feature extraction and
-        multiclass SVM. We use 218 dimension K-Means and RGB, HSV color moment.
+        multiclass SVM\@. We use 218-dimension K-Means and RGB, HSV color moment.
         The training phase takes no greater than one hour in time, 8GB in memory.
         Finally we obtained 69.82\% accuracy on test data classification.
 
@@ -51,15 +49,80 @@ We have made our work open, and the full project codes can be found at
 %------------------------------------------------------------------------%
 \section{Implementation}
 % say how we implementation the system
+We built a system to extracting features from images as well as
+    training model and answering queries of finding related images.
+The whole system is written in MATLAB\@.
+
+The system contains feature extracting part and SVM training and testing part.
+In the feature extracting part,
+    we use both features from K-Means method~\cite{coates2011analysis},
+    and the RGB and HSV color moments.
+We use 200-dimension K-Means features and 18-dimension color moment
+features (9 for RGB and 9 for HSV).
+The K-Means method contains patch extracting, patch whitening,
+    patch sampling and K-Means clustering,
+    and feature extrating.
+The color moment method makes use of 3 common color moments for 
+    each channel of RGB and HSV colors.
+At last, we put the features into SVM and make the classification possible.
+The related image search process is done by simply finding
+    the closest feature in the same catelogy.
+
+The following subsections includes the details of our algorithms.
 
 \subsection{Patch Extracting and Sampling}
-\subsubsection{Whitening}
+
+The key idea of K-Means featuring is to find the most common
+    patches in all images, and build features based on that
+    common patches (called centroids).
+Let $w$ be the size of the centroids (set to $6$ in our implementation).
+For an $l$-by-$m$ image,
+we will consider all its sub-images (patches) of size $w$-by-$w$;
+there are totally $(l-w+1)(m-w+1)$ such patches.
+Each patch can be represented into a vector of length $3w^2 = p$,
+    so one image can be represented into a $n$-by-$p$ matrix,
+    where $n=(l-w+1)(m-w+1)$.
+We represent all images into this matrix form.
+This process is called \textbf{patch extracting}.
+
+We need a large amount of sampling patches for the K-Means clustering process.
+We simply random selected $t\approx 1000000$ patches
+    from all the images' matrices.
+The sampled patches is a matrix $P$ of size $t$-by-$p$.
+
+\subsection{Whitening}
+
+%TODO
 
 \subsection{K-Means Clustering}
 
+We want $k=200$ centroids of all sampled patches.
+We do the K-Means clustering for those patches,
+    and take the final $k$ ``means''.
+The final centroids can be represented by a matrix $C$ of size $k$-by-$p$.
+
+%TODO more
+
 \subsection{Feature Extracting}
 
+Now consider an $l$-by-$m$ image.
+We know that it has $n$ patches, so it's an matrix $G$ of size $n$-by-$p$.
+We first calculate the distance between each patch
+and each centroids, resulting in a distance matrix $D\in\mathbb{R}^{n\times k}$
+where $D_{ij}$ is the distance from the $i$-th patch
+and the $j$-th centroid.
+Then, we normalize each row of $D$ by
+    subtracting its mean and dividing its standard variance.
+We negate each elements of the normalized $D$, elimate
+    all negative elements by setting them to zeros,
+    and get the new matrix $D^*$.
+Here, $D^*_{ij}$ being large means that the $i$-th
+
+\subsection{Color Moment}
+
 \subsection{Multiclass SVM}
+
+\subsection{Related Image Search}
 
 %------------------------------------------------------------------------%
 \section{Experiments}
@@ -241,6 +304,6 @@ So if time permitting, we will try those algorithms.
 \bibliographystyle{abbrv}
 \bibliography{sigproc} 
 
-\balancecolumns
+\balancecolumns{}
 
 \end{document}

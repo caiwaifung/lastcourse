@@ -5,8 +5,8 @@ data_list = '../data/data5k.txt';
 data_path = '../data/image/';
 
 % Evaluation data images
-test_list = '../data/final_image/0.txt';
-test_path = '../data/final_image/';
+test_list = '../data/query.txt';
+test_path = '../data/image/';
 
 % For training phase
 training=false;
@@ -122,8 +122,8 @@ end
 %  now we have: f (features), kms (kmeans model), svms (svm model)
 
 fprintf('> geting ground truth labels...\n');
-% labels_test = get_label(test_list);
-labels_test = zeros(2000,1);
+labels_test = get_label(test_list);
+%labels_test = zeros(2000,1);
 
 fprintf('> reading and resizing test images...\n');
 img_test = read_and_resize(test_list, test_path, image_max_side, image_max_side);
@@ -152,6 +152,24 @@ fprintf('> classifying by svm...\n');
 predict_label = predict_svm(svms, g, labels_test);
 
 dlmwrite(result_file, [predict_label g]);
+
+sta = zeros(10,10);
+for i = 1:size(predict_label, 1)
+    sta(labels_test(i),predict_label(i)) = sta(labels_test(i),predict_label(i)) + 1;
+end
+for i = 1:10
+    for j = 1:10
+        fprintf('%2d-%2d:%4d |', i,j,sta(i,j));
+        for k=1:sta(i,j)/2.5
+            fprintf('#');
+        end
+        if i==j
+            fprintf(' %.4g %%', 100*sta(i,j)/sum(sta(i,:)));
+        end
+        fprintf('\n');
+    end
+    fprintf('\n');
+end
 
 fprintf('------------ done evaluation -----------\n');
 
