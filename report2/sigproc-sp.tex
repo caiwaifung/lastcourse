@@ -28,8 +28,10 @@ Pufan He\\
         This project implements a similar image search algorithm (image
         retrieval) based on multiclass classification and K-Means feature. Our
         training phase includes image resizing, image patch extraction, patch
-        sampling, K-Means
-        We obtained 69\% accuracy on test data classification.
+        sampling, PCA whitening, K-Means for patches, feature extraction and
+        multiclass SVM. We use 218 dimension K-Means and RGB, HSV color moment.
+        The training phase takes no greater than one hour in time, 8GB in memory.
+        Finally we obtained 69.49\% accuracy on test data classification.
 
 We made our work open, and the full project codes can be found at
 \texttt{https://github.com/caiwaifung/lastcourse}.
