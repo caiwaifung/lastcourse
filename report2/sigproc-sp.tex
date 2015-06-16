@@ -1,6 +1,9 @@
 \documentclass{acm_proc_article-sp}
 \usepackage{tikz}
+\usepackage{multicol}
 \usepackage{url}
+\usepackage[shortlabels]{enumitem}
+\usepackage{fontspec}
 \usetikzlibrary{plotmarks}
 \begin{document}
 \title{Algorithm and Data Structure Coursework: \\K-Means Feature for
@@ -30,7 +33,7 @@ Image Retrieval}
         sampling, PCA whitening, K-Means for patches, feature extraction and
         multiclass SVM\@. We use 218-dimension K-Means and RGB, HSV color moment.
         The training phase takes no greater than one hour in time, 8GB in memory.
-        Finally we obtained 69.49\% accuracy on test data classification.
+        Finally we obtained 69.82\% accuracy on test data classification.
 
 We have made our work open, and the full project codes can be found at
 \texttt{https://github.com/caiwaifung/lastcourse}.
@@ -120,6 +123,19 @@ Finally, we sum up all rows and get a $k$-dimension feature for this image.
 
 \subsection{Color Moment}
 
+For each color channel, the three color moments is defined as following:
+\begin{itemize}
+    \item The first is the mean of all pixels.
+    \item The second is the standard deviation, that is:
+        \[
+            \sqrt{\frac{1}{N} \sum_{i=1}^N {(a_i-E[a])}^2}.
+        \]
+    \item The second is the skewness, that is:
+        \[
+            \sqrt[3]{\frac{1}{N} \sum_{i=1}^N {(a_i-E[a])}^3}.
+        \]
+\end{itemize}
+
 \subsection{Multiclass SVM}
 
 \subsection{Related Image Search}
@@ -128,10 +144,40 @@ After classification for a query image,
     we simply find the closest features in the same catelogy,
     and output the corresponding images as the related results.
 
+Note that a trick can be used to calculate the distance
+between each row of a matrix $A\in\mathbb{R}^{n*k}$ 
+and a matrix $B\in\mathbb{R}^{m*k}$.
+We want $C$ where $C_{ij}=||A_i - B_j||$. Have
+\begin{align*}
+    C_{ij} &= \sum_x {(A_{ix} - B_{jx})}^2 \\
+           &= \sum_x A_{ix}^2 + \sum_x B_{jx}^2 - 2 \sum_x A_{ix} B_{jx} \\
+           &= X_i + Y_j - 2 Z_{ij}.
+\end{align*}
+Here, $X$ and $Y$ are easy to calculate.
+$Z=AB^T$ can be fastly calculated using MATLAB (because MATLAB uses MKL
+internally).
+Thus the distance can be computed within a short period of time,
+    which gives us no reason to
+    use any advanced data structure
+    to find the closest images.
+
 %------------------------------------------------------------------------%
 \section{Experiments}
 
 \subsection{Data Set}
+Class labels $1\leq C \leq 10$:
+\begin{enumerate}[1.]
+\item Bird.
+\item Insect.
+\item Butterfly.
+\item Waterwheel.
+\item Construction.
+\item Piano.
+\item Airplane.
+\item Wine.
+\item Woman.
+\item Flower.
+\end{enumerate}
 
 \subsection{Without Whitening}
 
@@ -139,8 +185,137 @@ After classification for a query image,
 
 \subsection{Final Test}
 
-Please see \texttt{a.html} under \texttt{result.zip} for a more detailed demo.
+The distribution of predicted labels:
+\begin{multicols}{2}\tiny\tiny
+\begin{verbatim}
+1-1: 41 |################ 71.93 %
+1-2:  3 |#
+1-3:  1 |
+1-4:  3 |#
+1-5:  0 |
+1-6:  1 |
+1-7:  2 |
+1-8:  2 |
+1-9:  1 |
+1-10: 3 |#
 
+2-1:  7 |##
+2-2: 28 |########### 49.12 %
+2-3:  8 |###
+2-4:  1 |
+2-5:  0 |
+2-6:  0 |
+2-7:  2 |
+2-8:  4 |#
+2-9:  3 |#
+2-10: 4 |#
+
+3-1:  0 |
+3-2:  5 |##
+3-3: 46 |################## 85.19 %
+3-4:  1 |
+3-5:  0 |
+3-6:  1 |
+3-7:  0 |
+3-8:  0 |
+3-9:  1 |
+3-10: 0 |
+
+4-1:  0 |
+4-2:  1 |
+4-3:  3 |#
+4-4: 38 |############### 73.08 %
+4-5:  4 |#
+4-6:  2 |
+4-7:  0 |
+4-8:  2 |
+4-9:  2 |
+4-10: 0 |
+
+5-1:  0 |
+5-2:  0 |
+5-3:  0 |
+5-4:  7 |##
+5-5: 40 |################ 68.97 %
+5-6:  2 |
+5-7:  1 |
+5-8:  5 |##
+5-9:  3 |#
+5-10: 0 |
+
+6-1:  1 |
+6-2:  2 |
+6-3:  0 |
+6-4:  6 |##
+6-5:  1 |
+6-6: 38 |############### 58.46 %
+6-7:  0 |
+6-8:  7 |##
+6-9: 10 |####
+6-10: 0 |
+
+7-1:  3 |#
+7-2:  1 |
+7-3:  1 |
+7-4:  1 |
+7-5:  1 |
+7-6:  2 |
+7-7: 43 |################# 81.13 %
+7-8:  0 |
+7-9:  0 |
+7-10: 1 |
+
+8-1:  2 |
+8-2:  1 |
+8-3:  0 |
+8-4:  2 |
+8-5:  5 |##
+8-6:  4 |#
+8-7:  0 |
+8-8: 53 |##################### 74.65 %
+8-9:  3 |#
+8-10: 1 |
+
+9-1:  3 |#
+9-2:  1 |
+9-3:  0 |
+9-4:  0 |
+9-5:  0 |
+9-6:  5 |##
+9-7:  1 |
+9-8:  4 |#
+9-9: 35 |############## 71.43 %
+9-10: 0 |
+
+10-1: 3 |#
+10-2: 7 |##
+10-3: 2 |
+10-4: 4 |#
+10-5: 1 |
+10-6: 1 |
+10-7: 1 |
+10-8: 5 |##
+10-9: 7 |##
+10-10:66|########################## 68.04 %
+\end{verbatim}
+\end{multicols}
+Final Accuracy of 10-classification:
+\begin{verbatim}
+Accuracy = 69.8206% (428/613) (classification)
+\end{verbatim}
+
+On training set:
+\begin{verbatim}
+Accuracy = 88.96% (4448/5000) (classification)
+\end{verbatim}
+\begin{center}
+Query image | 3 closest images in predicted class
+\includegraphics[width=0.7\linewidth]{001.png}\\
+\includegraphics[width=0.7\linewidth]{002.png}\\
+\includegraphics[width=0.7\linewidth]{003.png}
+\end{center}
+
+Please see \texttt{a.html} under \texttt{result.zip} for a more detailed demo.
 %------------------------------------------------------------------------%
 \section{Conclusion and Future Work}
 We have implemented a full workflow of image retrieval problem. Our program is
@@ -151,7 +326,7 @@ patterns, which is similar to other successful convolutionary computer vision
 systems. Our training phase and feature extraction process are highly
 optimized, so that training 5000 images takes less than one hour, and
 classifying 2000 test images takes less than one minutes. Our final accuracy
-rate 69.49\% is also competitive in all current image 10-classification
+rate 69.82\% is also competitive in all current image 10-classification
 algorithms using the same level of computing resources. The closest retrieval
 demo brings very reasonable results as well.
 
