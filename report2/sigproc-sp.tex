@@ -72,8 +72,24 @@ We have made our work open, and the full project codes can be found at
 Please see \texttt{a.html} under \texttt{result.zip} for a more detailed demo.
 
 %------------------------------------------------------------------------%
-\section{Conclusion}
-% say some nonsense
+\section{Conclusion and Future Work}
+We have implemented a full workflow of image retrieval problem. Our program is
+integrated in one matlab module, and almost all parameters can be adjusted. We
+implemented our own K-Means algorithm, and visualized our K-Means result on
+patch clustering into $K$ images. The centroids we got prove to meet clear
+patterns, which is similar to other successful convolutionary computer vision
+systems. Our training phase and feature extraction process are highly
+optimized, so that training 5000 images takes less than one hour, and
+classifying 2000 test images takes less than one minutes. Our final accuracy
+rate 69.49\% is also competitive in all current image 10-classification
+algorithms using the same level of computing resources. The closest retrieval
+demo brings very reasonable results as well.
+
+However there are still many wrong predictions that are trivial for human. If
+we use deeper machine learning model such as CNN, we may further improve our
+accuracy. We can also generate small noises, random rotation, flipping, and
+many other tricks to enrich the dataset for larger machine learning framework.
+So if time permitting, we will try those algorithms.
 
 %------------------------------------------------------------------------%
 \nocite{*}
