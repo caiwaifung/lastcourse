@@ -83,7 +83,7 @@ Each patch can be represented into a vector of length $3w^2 = p$,
     so one image can be represented into a $n$-by-$p$ matrix,
     where $n=(l-w+1)(m-w+1)$.
 We represent all images into this matrix form.
-This process is called \textbf{patch extracting}.
+This process is called \emph{patch extracting}.
 
 We need a large amount of sampling patches for the K-Means clustering process.
 We simply random selected $t\approx 1000000$ patches
@@ -137,13 +137,50 @@ Then, we normalize each row of $D$ by
 We negate each elements of the normalized $D$, elimate
     all negative elements by setting them to zeros,
     and get the new matrix $D^*$.
-Here, $D^*_{ij}$ being large means that the $i$-th
+Here, $D^*_{ij}$ being large means that the $i$-th patch
+    looks close to the $j$-th centroid.
+
+Finally, we sum up all rows and get a $k$-dimension feature for this image.
 
 \subsection{Color Moment}
+
+For each color channel, the three color moments is defined as following:
+\begin{itemize}
+    \item The first is the mean of all pixels.
+    \item The second is the standard deviation, that is:
+        \[
+            \sqrt{\frac{1}{N} \sum_{i=1}^N {(a_i-E[a])}^2}.
+        \]
+    \item The second is the skewness, that is:
+        \[
+            \sqrt[3]{\frac{1}{N} \sum_{i=1}^N {(a_i-E[a])}^3}.
+        \]
+\end{itemize}
 
 \subsection{Multiclass SVM}
 
 \subsection{Related Image Search}
+
+After classification for a query image,
+    we simply find the closest features in the same catelogy,
+    and output the corresponding images as the related results.
+
+Note that a trick can be used to calculate the distance
+between each row of a matrix $A\in\mathbb{R}^{n*k}$ 
+and a matrix $B\in\mathbb{R}^{m*k}$.
+We want $C$ where $C_{ij}=||A_i - B_j||$. Have
+\begin{align*}
+    C_{ij} &= \sum_x {(A_{ix} - B_{jx})}^2 \\
+           &= \sum_x A_{ix}^2 + \sum_x B_{jx}^2 - 2 \sum_x A_{ix} B_{jx} \\
+           &= X_i + Y_j - 2 Z_{ij}.
+\end{align*}
+Here, $X$ and $Y$ are easy to calculate.
+$Z=AB^T$ can be fastly calculated using MATLAB (because MATLAB uses MKL
+internally).
+Thus the distance can be computed within a short period of time,
+    which gives us no reason to
+    use any advanced data structure
+    to find the closest images.
 
 %------------------------------------------------------------------------%
 \section{Experiments}
