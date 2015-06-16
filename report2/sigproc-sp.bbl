@@ -1,0 +1,44 @@
+\begin{thebibliography}{1}
+
+\bibitem{CC01a}
+C.-C. Chang and C.-J. Lin.
+\newblock {LIBSVM}: A library for support vector machines.
+\newblock {\em ACM Transactions on Intelligent Systems and Technology},
+  2:27:1--27:27, 2011.
+\newblock Software available at \url{http://www.csie.ntu.edu.tw/~cjlin/libsvm}.
+
+\bibitem{coates2012learning}
+A.~Coates and A.~Y. Ng.
+\newblock Learning feature representations with k-means.
+\newblock In {\em Neural Networks: Tricks of the Trade}, pages 561--580.
+  Springer, 2012.
+
+\bibitem{coates2011analysis}
+A.~Coates, A.~Y. Ng, and H.~Lee.
+\newblock An analysis of single-layer networks in unsupervised feature
+  learning.
+\newblock In {\em International Conference on Artificial Intelligence and
+  Statistics}, pages 215--223, 2011.
+
+\bibitem{jolliffe2002principal}
+I.~Jolliffe.
+\newblock {\em Principal component analysis}.
+\newblock Wiley Online Library, 2002.
+
+\bibitem{lu2007survey}
+D.~Lu and Q.~Weng.
+\newblock A survey of image classification methods and techniques for improving
+  classification performance.
+\newblock {\em International journal of Remote sensing}, 28(5):823--870, 2007.
+
+\bibitem{suykens1999least}
+J.~A. Suykens and J.~Vandewalle.
+\newblock Least squares support vector machine classifiers.
+\newblock {\em Neural processing letters}, 9(3):293--300, 1999.
+
+\bibitem{vailaya2001image}
+A.~Vailaya, M.~A. Figueiredo, A.~K. Jain, and H.-J. Zhang.
+\newblock Image classification for content-based indexing.
+\newblock {\em Image Processing, IEEE Transactions on}, 10(1):117--130, 2001.
+
+\end{thebibliography}
