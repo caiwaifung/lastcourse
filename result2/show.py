@@ -13,7 +13,7 @@ f = open('../data/{}.txt'.format(sys.argv[1]), 'r')
 a = [x.strip() for x in f.readlines()]
 f.close()
 
-f = open('../data/final_image/0.txt', 'r')
+f = open('../data/query.txt', 'r')
 b = [x.strip() for x in f.readlines()]
 f.close()
 
@@ -99,7 +99,7 @@ for i in range(min(100, len(ans))):
     td0 = '<td align="center" class="user-photo">'
     template = 'alt="" style="height:{}px;max-width:{}px" align="center"'.format(side,side)
     print >>f, '<tr>'
-    print >>f, '{}<img src="../data/final_image/{}" {}></td>'.format(td0, b[i], template)
+    print >>f, '{}<img src="../data/image/{}" {}></td>'.format(td0, b[i], template)
     for k in ans[i]:
         ok_icon = ' <img src="ok-icon.png" alt="" style="height:20px;width:20px">' 
         flag = ok_icon if a[k].split('_')[0] == std else ''
