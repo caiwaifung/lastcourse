@@ -80,7 +80,7 @@ Each patch can be represented into a vector of length $3w^2 = p$,
     so one image can be represented into a $n$-by-$p$ matrix,
     where $n=(l-w+1)(m-w+1)$.
 We represent all images into this matrix form.
-This process is called \textbf{patch extracting}.
+This process is called \emph{patch extracting}.
 
 We need a large amount of sampling patches for the K-Means clustering process.
 We simply random selected $t\approx 1000000$ patches
@@ -113,13 +113,20 @@ Then, we normalize each row of $D$ by
 We negate each elements of the normalized $D$, elimate
     all negative elements by setting them to zeros,
     and get the new matrix $D^*$.
-Here, $D^*_{ij}$ being large means that the $i$-th
+Here, $D^*_{ij}$ being large means that the $i$-th patch
+    looks close to the $j$-th centroid.
+
+Finally, we sum up all rows and get a $k$-dimension feature for this image.
 
 \subsection{Color Moment}
 
 \subsection{Multiclass SVM}
 
 \subsection{Related Image Search}
+
+After classification for a query image,
+    we simply find the closest features in the same catelogy,
+    and output the corresponding images as the related results.
 
 %------------------------------------------------------------------------%
 \section{Experiments}
